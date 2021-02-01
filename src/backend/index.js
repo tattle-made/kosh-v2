@@ -13,4 +13,4 @@
 
 // console.log("server running");
 
-console.log(process.env);
+console.log("hi");
