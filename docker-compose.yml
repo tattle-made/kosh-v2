@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  redis:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "~/data/kosh/redis:/data"
+  redis_ui:
+    image: "marian/rebrow"
+    ports:
+      - "5001:5001"
+    restart: always
+  db:
+    image: "mysql"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pw
+      MYSQL_DATABASE: kosh
+      MYSQL_USER: user_name
+      MYSQL_PASSWORD: user_pw
+    ports:
+      - 3306:3306
+    volumes:
+      - "~/data/kosh/db:/var/lib/mysql"
+  db_gui:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  backend:
+    build:
+      context: ./src/backend
+      target: debug
+    restart: always
+    ports:
+      - 10001:8000
+      - 9229:9229
+    volumes:
+      - "./src/backend:/app"
+
+volumes:
+  node_modules:

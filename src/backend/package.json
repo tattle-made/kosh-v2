@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "0.0.0-development",
+  "description": "backend stack for kosh",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tattle-made/kosh-test.git"
+  },
+  "keywords": [
+    "archive",
+    "multi-lingual",
+    "multi-modal",
+    "social-media",
+    "civic-tech"
+  ],
+  "author": "tattle-made",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tattle-made/kosh/issues"
+  },
+  "homepage": "https://github.com/tattle-made/kosh#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "semantic-release": "^17.3.7"
+  }
+}

@@ -1,0 +1,21 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: cd src/backend && npm ci --branches 'main'
+      - run: cd src/backend && npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
