@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: main
+          ref: master
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - run: cd src/backend && npm ci --branches 'main'
+      - run: cd src/backend && npm ci
       - run: cd src/backend && npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
