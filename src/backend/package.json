@@ -1,5 +1,6 @@
 {
   "name": "@tattle-made/kosh-backend",
+  "private": true,
   "version": "0.0.0-development",
   "description": "backend stack for kosh",
   "main": "index.js",
