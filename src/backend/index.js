@@ -1,16 +1,15 @@
-// import express from "express";
+// import { TEST } from "./test.js";
+const { expressApp, configure, start } = require("./core/http/index");
+const { configure: configureHealthCheck } = require("./app/health-check/index");
+const {
+  configure: configureAuthentication,
+} = require("./app/user-authentication/index");
+const config = require("config");
 
-// const PORT = 8000;
-// const HOST = "0.0.0.0.";
+const PORT = config.get("express.port");
 
-// const app = express();
+configure(expressApp);
+configureHealthCheck(expressApp);
+configureAuthentication(expressApp);
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World \n");
-// });
-
-// app.listen(PORT, HOST);
-
-// console.log("server running");
-
-console.log("hi");
+start(expressApp, PORT);

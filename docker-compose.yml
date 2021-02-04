@@ -35,6 +35,7 @@ services:
       context: ./src/backend
       target: debug
     restart: always
+    command: tail -f /dev/null
     ports:
       - 10001:8000
       - 9229:9229
