@@ -1,4 +1,3 @@
-// import { TEST } from "./test.js";
 const { expressApp, configure, start } = require("./core/http/index");
 const { configure: configureHealthCheck } = require("./app/health-check/index");
 const {
@@ -13,3 +12,9 @@ configureHealthCheck(expressApp);
 configureAuthentication(expressApp);
 
 start(expressApp, PORT);
+
+const test = () => {
+  setTimeout(async () => {}, 1000);
+};
+
+// test();

@@ -35,12 +35,14 @@ services:
       context: ./src/backend
       target: debug
     restart: always
-    command: tail -f /dev/null
+    command: nodemon --inspect=0.0.0.0 index.js
     ports:
       - 10001:8000
       - 9229:9229
     volumes:
       - "./src/backend:/app"
+    env_file:
+      - ./src/backend/development.env
 
 volumes:
   node_modules:

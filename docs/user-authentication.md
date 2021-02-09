@@ -70,3 +70,11 @@ Execute the following :
    - handler : performs the various operations as part of request-response cycle of a route
    - models : of the payload, so that they can be validated
    - response : build on some base responses
+
+### JWT
+
+## QA
+
+- can't register existing users
+- password has to have 6 to 16 characters. with at least a special character and a number
+- user should only be allowed to login if their status is verified
