@@ -30,3 +30,9 @@ What goes in core vs app
 app.js
 initialize passportjs
 setup routes for authentication
+
+## Frontend
+
+src/components : core components
+atoms : very reusable components that could potentially be reused across the project atleast and throughout tattle even at some point.
+molecules: app specific components
