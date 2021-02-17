@@ -25,18 +25,13 @@ const signUp = async (requestBody, response) => {
 
     sendEmail({
       subject: "Email Verification for Kosh",
-      body: `Please complete your registration by visiting this link https://kosh.tattle.co.in/email-verification?token=${newUser.verificationToken}`,
+      body: `Please complete your registration by visiting this link http://localhost:8000/app/email-verification?token=${newUser.verificationToken}`,
       receiver: newUser.email,
     });
 
-    const accessToken = generateAccessToken(newUser);
-    const refreshToken = generateRefreshToken(newUser);
-    await addToken({ token: refreshToken });
-    response.status(StatusCodes.OK).send({
-      ...newUser.getPublicProfile(),
-      accessToken,
-      refreshToken,
-    });
+    response
+      .status(StatusCodes.OK)
+      .send({ message: "Please check your email to complete registration" });
   } catch (err) {
     console.log("Error Signing up User ", err);
     response
@@ -50,7 +45,12 @@ const emailVerification = async (requestQuery, response) => {
 
   try {
     const user = await verifyToken({ verificationToken: token });
-    response.status(StatusCodes.OK).send({ user: user.getPublicProfile() });
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+    await addToken({ token: refreshToken });
+    response
+      .status(StatusCodes.OK)
+      .send({ ...user.getPublicProfile(), accessToken, refreshToken });
   } catch (error) {
     console.log("Error : Could not verify token");
     response

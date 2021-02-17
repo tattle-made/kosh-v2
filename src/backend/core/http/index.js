@@ -3,10 +3,25 @@ const bodyParser = require("body-parser");
 const {
   authenticationMiddleware,
 } = require("../../app/user-authentication/middleware-authentication");
+const cors = require("cors");
 
 const expressApp = express();
 
 const configure = (expressApp) => {
+  expressApp.use(
+    cors({
+      origin: "*",
+    })
+  );
+
+  expressApp.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
   expressApp.use(bodyParser.urlencoded());
   expressApp.use(bodyParser.json());
   expressApp.use(authenticationMiddleware);

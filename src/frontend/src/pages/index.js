@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../components/atoms/layout";
-
-/**
- * @author
- * @function Index
- **/
+import React from "react";
+import { Box, Text, Heading } from "grommet";
+import { ContentSection } from "../components/atoms/section";
+import Layout from "../layouts";
 
 const Index = () => {
-  const [fetching, setFetching] = useState(false);
-
-  useEffect(() => {
-    setFetching(true);
-  });
-
-  return <Layout>hello</Layout>;
+  return (
+    <Layout>
+      <ContentSection>
+        <Heading level={2}>Lets archive the important stuff</Heading>
+      </ContentSection>
+    </Layout>
+  );
 };
 
 export default Index;
