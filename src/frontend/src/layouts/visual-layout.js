@@ -19,10 +19,12 @@ const VisualLayout = ({ children, location }) => {
     <Box file direction={"column"} fill>
       <SEO title={`Kosh`} />
 
-      <Header />
-      <Breadcrumb location={location} />
+      <Box>
+        <Header />
+        {/* <Breadcrumb location={location} /> */}
+      </Box>
 
-      <Box flex={"grow"}>
+      <Box>
         <Box>{children}</Box>
         {notification.visibility && (
           <Layer

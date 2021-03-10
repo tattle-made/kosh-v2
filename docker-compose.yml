@@ -35,7 +35,7 @@ services:
       context: ./src/backend
       target: debug
     restart: always
-    command: nodemon --inspect=0.0.0.0 index.js
+    command: tail -f /dev/null
     ports:
       - 10001:8000
       - 9229:9229
@@ -43,6 +43,27 @@ services:
       - "./src/backend:/app"
     env_file:
       - ./src/backend/development.env
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - "~/data/kosh/mongo:/data/db"
+
+  localstack:
+    image: localstack/localstack-full
+    container_name: localstack
+    ports:
+      - "4563-4599:4563-4599"
+      - "8055:8080"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data ~/data/kosh/
+    volumes:
+      - "~/data/kosh/s3:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
 volumes:
   node_modules:

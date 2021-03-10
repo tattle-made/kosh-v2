@@ -1,5 +1,5 @@
 FROM node:15.7.0-alpine3.12 AS debug
-
+RUN apk add python3 g++ make 
 WORKDIR /app
 
 COPY package.json /app/package.json

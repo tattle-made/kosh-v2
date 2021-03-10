@@ -1,70 +1,29 @@
-import React from "react";
-import { Box, Text, Heading, Paragraph, Image } from "grommet";
-import { Home } from "react-feather";
-import { useStaticQuery } from "gatsby";
+import React, { useEffect } from "react";
+import { Box, Heading, Text } from "grommet";
 import { BlockSection, ContentSection, Section } from "../atoms/section";
-import { ResponsiveGrid } from "../atoms/responsive-grid";
-import { PlainLink } from "../atoms/links";
-import Breadcrumb from "../atoms/breadcrumbs";
+import DataFeed from "../atoms/DataFeed";
 
-/**
- * @author
- * @function Datasources
- **/
+const datasourceToCollectionMap = {
+  "7c62d659-8294-11eb-bd02-0242ac120004": "Fact Check Article Media Items",
+  "bc55e2a0-8228-11eb-9e87-719e13e27321": "Checkmate dataset",
+  "bc58a1c0-8228-11eb-9e87-719e13e27321": "The Fearspeech Dataset",
+};
 
-const DataSource = ({ location }) => {
-  const { cover_factcheck_articles } = useStaticQuery(graphql`
-    query {
-      cover_factcheck_articles: file(
-        relativePath: { eq: "fact_check_cover.png" }
-      ) {
-        childImageSharp {
-          fluid {
-            src
-          }
-        }
-      }
-    }
-  `);
+const Datasource = ({ datasourceId }) => {
   return (
     <ContentSection>
       <Box direction={"column"}>
         <Section>
-          <ResponsiveGrid>
-            <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
-              <PlainLink to={"/app/datasource/factcheck-articles"}>
-                <Box
-                  width={"100%"}
-                  height={"160px"}
-                  round={"xxsmall"}
-                  overflow={"hidden"}
-                  background={`visuals-1`}
-                >
-                  <Image
-                    src={cover_factcheck_articles.childImageSharp.fluid.src}
-                    fit="contain"
-                    fill={true}
-                  />
-                </Box>
-                <Box>
-                  <Heading
-                    level={4}
-                    margin={{ bottom: "4.578px", top: "7.324px" }}
-                  >
-                    Fact Check Articles
-                  </Heading>
-                  <Paragraph size={"small"} margin={{ top: "none" }}>
-                    These media items were scraped between 2018 to 2020 from
-                    IFCN certified Indian Fact Checking agencies
-                  </Paragraph>
-                </Box>
-              </PlainLink>
-            </Box>
-          </ResponsiveGrid>
+          <Box height={"3.6em"}></Box>
+          <Text size={"large"}>{datasourceToCollectionMap[datasourceId]}</Text>
+          <DataFeed
+            title={datasourceToCollectionMap[datasourceId]}
+            datasourceId={datasourceId}
+          />
         </Section>
       </Box>
     </ContentSection>
   );
 };
 
-export default DataSource;
+export default Datasource;

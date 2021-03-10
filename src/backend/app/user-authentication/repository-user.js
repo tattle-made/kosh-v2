@@ -10,12 +10,16 @@ const { user } = db.sequelize.models;
  *  {message, result, code}
  *  if code
  */
-const create = async ({ email, password }) => {
+const create = async ({ email, password, verified }) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const existingUser = await user.findOne({ where: { email: email } });
     if (existingUser === null) {
-      const newUser = await user.create({ email, password: hashedPassword });
+      const newUser = await user.create({
+        email,
+        password: hashedPassword,
+        status: verified ? "verified" : "unverified",
+      });
       return newUser;
     } else {
       throw new Error("This email id is already registered with us.");

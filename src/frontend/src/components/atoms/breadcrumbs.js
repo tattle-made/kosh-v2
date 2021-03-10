@@ -35,7 +35,7 @@ const Breadcrumb = ({ location }) => {
             {" "}
             &nbsp;\&nbsp;
           </Text>
-          <Text size={"large"} weight={600}>
+          <Text size={"medium"} weight={600}>
             Datasource
           </Text>
         </Box>
