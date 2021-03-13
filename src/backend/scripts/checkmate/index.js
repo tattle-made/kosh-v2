@@ -50,7 +50,7 @@ const ingest = async () => {
           payloadMetadata.filename + "." + deriveFileExtention(payloadPost.type)
         );
         const uploadRes = await upload(filePath, fileId);
-        payloadPost.media_url = `https://fs.tattle.co.in/service/kosh/${fileId}`;
+        payloadPost.media_url = `https://fs.tattle.co.in/service/kosh/file/${fileId}`;
         const postRes = await post.create(payloadPost);
         payloadMetadata.fk_kosh = postRes.id;
         await saveInMongo(metadataStoreName, payloadMetadata);

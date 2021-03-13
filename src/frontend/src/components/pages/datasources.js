@@ -50,9 +50,9 @@ const DataSources = ({ location }) => {
         <Section>
           <Text size={"large"}>Datasources</Text>
           <ResponsiveGrid>
-            <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
+            {/* <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/7c62d659-8294-11eb-bd02-0242ac120004"}
+                to={"/app/datasource/d10879a0-83cd-11eb-8eb1-9d22f3b98bd1"}
               >
                 <Box
                   width={"100%"}
@@ -80,10 +80,10 @@ const DataSources = ({ location }) => {
                   </Paragraph>
                 </Box>
               </PlainLink>
-            </Box>
+            </Box> */}
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/bc55e2a0-8228-11eb-9e87-719e13e27321"}
+                to={"/app/datasource/d1067dd0-83cd-11eb-8eb1-9d22f3b98bd1"}
               >
                 <Box
                   width={"100%"}
@@ -103,18 +103,22 @@ const DataSources = ({ location }) => {
                     level={4}
                     margin={{ bottom: "4.578px", top: "7.324px" }}
                   >
-                    Checkmate dataset
+                    CheckMate: Prioritizing User Generated Content for Fact
+                    Checking
                   </Heading>
                   <Paragraph size={"small"} margin={{ top: "none" }}>
-                    Sed eu dui in lorem auctor faucibus. Sed ac felis nec lectus
-                    eleifend ultrices.
+                    Dataset of 2200 posts from ShareChat, with annotations by
+                    Tattle team of claims contained in them
                   </Paragraph>
+                  <a href="https://arxiv.org/abs/2010.13387" taget="_blank">
+                    Arxiv Link
+                  </a>
                 </Box>
               </PlainLink>
             </Box>
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/bc58a1c0-8228-11eb-9e87-719e13e27321"}
+                to={"/app/datasource/d1078f40-83cd-11eb-8eb1-9d22f3b98bd1"}
               >
                 <Box
                   width={"100%"}
@@ -137,11 +141,13 @@ const DataSources = ({ location }) => {
                     Fearspeech Dataset
                   </Heading>
                   <Paragraph size={"small"} margin={{ top: "none" }}>
-                    Etiam porta tempus lectus, sed auctor erat venenatis
-                    vestibulum. Nulla sit amet maximus enim. Pellentesque in sem
-                    hendrerit, volutpat est at, bibendum massa. Nunc eu
-                    vulputate orci.
+                    Data set released by Saha et. al. with their paper: "Short
+                    is the Road that Leads from Fear to Hate": Fear Speech in
+                    Indian WhatsApp Groups"
                   </Paragraph>
+                  <a href="https://arxiv.org/abs/2102.03870" target="_blank">
+                    Arxiv Link
+                  </a>
                 </Box>
               </PlainLink>
             </Box>

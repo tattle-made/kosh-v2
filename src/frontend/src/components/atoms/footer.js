@@ -17,6 +17,9 @@ const Footer = () => {
             <PlainLink to={"/terms-of-service"}>
               <Text size={"small"}>Terms of Service</Text>
             </PlainLink>
+            <PlainLink to={"/faq"}>
+              <Text size={"small"}>FAQ</Text>
+            </PlainLink>
           </Box>
           <Box flex={"grow"}></Box>
           <Box direction={"row"} gap={"small"}>

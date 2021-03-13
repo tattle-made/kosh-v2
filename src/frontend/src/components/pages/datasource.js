@@ -14,7 +14,6 @@ const Datasource = ({ datasourceId }) => {
     <ContentSection>
       <Box direction={"column"}>
         <Section>
-          <Box height={"3.6em"}></Box>
           <Text size={"large"}>{datasourceToCollectionMap[datasourceId]}</Text>
           <DataFeed
             title={datasourceToCollectionMap[datasourceId]}

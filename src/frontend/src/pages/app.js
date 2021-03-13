@@ -4,7 +4,7 @@ import DataSource from "../components/pages/datasource";
 import PostDetails from "../components/atoms/post-details";
 import Login from "../components/pages/login";
 import SignUp from "../components/pages/signup";
-import EmailVerification from "../components/pages/email-verification";
+import EmailVerification from "./email-verification";
 import {
   PrivateRoute,
   DisabledForLoggedInUser,
@@ -17,7 +17,7 @@ import { Router } from "@reach/router";
  * @function App
  **/
 
-const App = () => {
+const App = ({ location }) => {
   const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
   });
 
   return (
-    <Layout>
+    <Layout location={location}>
       <Router basepath={"/app"}>
         <PrivateRoute component={DataSources} path={"/datasource"} />
         <PrivateRoute
@@ -38,10 +38,6 @@ const App = () => {
         />
         <DisabledForLoggedInUser component={Login} path={"/login"} />
         <DisabledForLoggedInUser component={SignUp} path={"/sign-up"} />
-        <DisabledForLoggedInUser
-          component={EmailVerification}
-          path="/email-verification"
-        />
       </Router>
     </Layout>
   );

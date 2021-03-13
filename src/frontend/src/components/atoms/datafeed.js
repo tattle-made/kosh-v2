@@ -52,7 +52,7 @@ const DataFeed = ({ title, datasourceId }) => {
     setMultipleMediaBlockData({ status: "loading" });
     return axios
       .get(
-        `http://localhost:10001/datasource/${datasourceId}/posts?page=${pageNum}`,
+        `https://kosh-server-v2.tattle.co.in/datasource/${datasourceId}/posts?page=${pageNum}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

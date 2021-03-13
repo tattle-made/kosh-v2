@@ -25,7 +25,7 @@ const signUp = async (requestBody, response) => {
 
     sendEmail({
       subject: "Email Verification for Kosh",
-      body: `Please complete your registration by visiting this link http://localhost:8000/app/email-verification?token=${newUser.verificationToken}`,
+      body: `Please complete your registration by visiting this link http://kosh.tattle.co.in/email-verification/?token=${newUser.verificationToken}`,
       receiver: newUser.email,
     });
 
@@ -41,6 +41,7 @@ const signUp = async (requestBody, response) => {
 };
 
 const emailVerification = async (requestQuery, response) => {
+  console.log({ RQ: requestQuery });
   const { token } = requestQuery;
 
   try {
@@ -111,7 +112,8 @@ const refreshToken = async (requestBody, response) => {
       }),
     };
     const accessToken = generateAccessToken(user);
-    response.status(StatusCodes.OK).send({ accessToken });
+    const refreshToken = generateRefreshToken(user);
+    response.status(StatusCodes.OK).send({ accessToken, refreshToken });
   } catch (error) {
     console.log("Error : could not refresh token", error);
     response

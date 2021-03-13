@@ -51,7 +51,7 @@ const SinglePost = ({ id, type, src, preview, heading, body, timestamp }) => {
     <ResponsiveContext.Consumer>
       {(size) => (
         <Box
-          width={boxDimension[size]}
+          width={"100%"}
           border={{ color: type == "error" ? "status-error" : "light-3" }}
           round={"xsmall"}
           onMouseEnter={onMouseEnter}
@@ -60,8 +60,8 @@ const SinglePost = ({ id, type, src, preview, heading, body, timestamp }) => {
           onClick={postClicked}
         >
           <Box
-            width={boxDimension[size]}
-            height={boxDimension[size]}
+            width={"100%"}
+            height={"200px"}
             pad={"small"}
             alignContent={"center"}
           >

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `http://localhost:10001`;
+const API_URL = `https://kosh-server-v2.tattle.co.in`;
 
 const get = async (endpoint, token) => {
   return await axios.get(`${API_URL}${endpoint}`, {

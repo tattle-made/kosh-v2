@@ -3,7 +3,7 @@ const db = require("../../database/models");
 const { datasource } = db.sequelize.models;
 
 const user = {
-  email: "test_verified_2@test.com",
+  email: "demo@tattle.co.in",
   password: "Abcdef123$",
   verified: true,
 };
@@ -23,6 +23,13 @@ const Datasources = [
     creator: "",
     visibility: "public",
   },
+  {
+    name: "factcheck",
+    description:
+      "Tattle's database of media items scraped from IFCN certified Indian fact checkers",
+    creator: "",
+    visibility: "public",
+  },
 ];
 
 const seedDatabase = async () => {
@@ -33,12 +40,16 @@ const seedDatabase = async () => {
 
   Datasources[0].creator = userRes.id;
   Datasources[1].creator = userRes.id;
+  Datasources[2].creator = userRes.id;
 
   const checkmateRes = await datasource.create(Datasources[0]);
   console.log(`Checkmate datasource created : ${checkmateRes.id}`);
 
   const fearspeechRes = await datasource.create(Datasources[1]);
   console.log(`Fearspeech datasource created : ${fearspeechRes.id}`);
+
+  const factcheckRes = await datasource.create(Datasources[2]);
+  console.log(`factcheck datasource created : ${factcheckRes.id}`);
 };
 
 try {

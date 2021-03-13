@@ -32,5 +32,11 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: "kosh.tattle.co.in",
+      },
+    },
   ],
 };

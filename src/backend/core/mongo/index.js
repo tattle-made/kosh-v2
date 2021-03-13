@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://mongo";
+const uri = process.env.MONGO_DB_URL;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -13,6 +13,7 @@ const connect = async () => {
     // await client.db("kosh_metadata_store").command({ ping: 1 });
     console.log("Success : connected to metadata store");
   } catch (err) {
+    console.log(err);
     console.log("Error : could not connect to mongo");
     process.exit();
   }

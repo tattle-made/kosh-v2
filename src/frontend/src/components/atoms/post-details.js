@@ -3,7 +3,6 @@ import { Box, Heading, Text, Image, Video, Button } from "grommet";
 import { BlockSection, ContentSection, Section } from "../atoms/section";
 import { getUser } from "../../service/user-authentication";
 import axios from "axios";
-import ReactJson from "react-json-view";
 import { PlainExternalLink } from "./links";
 import { ArrowDown } from "react-feather";
 
@@ -16,7 +15,7 @@ const PostDetails = ({ datasourceId, postId }) => {
     console.log({ datasourceId, postId });
     axios
       .get(
-        `http://localhost:10001/datasource/${datasourceId}/posts/${postId}`,
+        `https://kosh-server-v2.tattle.co.in/datasource/${datasourceId}/posts/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -59,11 +58,7 @@ const PostDetails = ({ datasourceId, postId }) => {
             </Box>
           </Box>
 
-          <Box
-            direction={"row-responsive"}
-            margin={{ top: "medium" }}
-            gap={"medium"}
-          >
+          <Box direction={"column"} margin={{ top: "medium" }} gap={"medium"}>
             {detail && detail.post && (
               <Box gap={"medium"}>
                 <Preview
@@ -73,13 +68,7 @@ const PostDetails = ({ datasourceId, postId }) => {
                 />
               </Box>
             )}
-
-            <ReactJson
-              name={"metadata"}
-              src={detail.metadata}
-              enableClipboard={false}
-              displayDataTypes={false}
-            />
+            <pre>{JSON.stringify(detail.metadata, undefined, 2)}</pre>
           </Box>
         </Section>
       </Box>

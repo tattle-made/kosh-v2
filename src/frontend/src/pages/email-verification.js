@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Box, Text, Button } from "grommet";
 import { useQueryParam, StringParam } from "use-query-params";
 import { navigate } from "gatsby";
-import { setUser, emailVerification } from "../../service/user-authentication";
-import { ContentSection, BlockSection } from "../atoms/section";
+import { setUser, emailVerification } from "../service/user-authentication";
+import { ContentSection, BlockSection } from "../components/atoms/section";
+import Layout from "../layouts";
 
 /**
  * @author
@@ -35,22 +36,24 @@ const EmailVerification = () => {
   };
 
   return (
-    <ContentSection>
-      <BlockSection>
-        <Box>
-          <Text>
-            {" "}
-            Your email has been verified. Please continue to login into Kosh
-          </Text>
-          <Box height={"2em"} />
-          <Button
-            primary
-            label={"Continue to Kosh"}
-            onClick={onContinueLoginClicked}
-          />
-        </Box>
-      </BlockSection>
-    </ContentSection>
+    <Layout>
+      <ContentSection>
+        <BlockSection>
+          <Box>
+            <Text>
+              {" "}
+              Your email has been verified. Please continue to login into Kosh
+            </Text>
+            <Box height={"2em"} />
+            <Button
+              primary
+              label={"Continue to Kosh"}
+              onClick={onContinueLoginClicked}
+            />
+          </Box>
+        </BlockSection>
+      </ContentSection>
+    </Layout>
   );
 };
 

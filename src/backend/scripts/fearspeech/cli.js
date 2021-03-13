@@ -18,6 +18,11 @@ const options = yargs
     describe: "Name of the collection in mongo where metadata should be stored",
     type: "string",
   })
+  .option("s", {
+    alias: "metadata-collection-name",
+    describe: "Name of the collection in mongo where metadata should be stored",
+    type: "string",
+  })
   .option("u", {
     alias: "creator-id",
     describe: "UUID of the user",
@@ -37,6 +42,9 @@ const parameters = {
   metadataStoreName: options.metadataStoreName
     ? options.metadataStoreName
     : config.METADATA_STORE_NAME,
+  metadataCollectionName: options.metadataCollectionName
+    ? options.metadataCollectionName
+    : options.datasourceId,
   creatorId: options.creatorId,
   datasourceId: options.datasourceId,
 };

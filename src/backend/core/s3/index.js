@@ -1,8 +1,8 @@
 const AWS = require("aws-sdk");
 
 const credentials = {
-  accessKeyId: process.env.EMAILER_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.EMAILER_AWS_ACCESS_KEY_ID,
+  accessKeyId: process.env.SERVICE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.SERVICE_AWS_SECRET_ACCESS_KEY,
 };
 
 const useLocal = process.env.NODE_ENV === "development";

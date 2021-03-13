@@ -18,6 +18,7 @@ const {
   mediaDirPath,
   csvFilePath,
   metadataStoreName,
+  metadataCollectionName,
   creatorId,
   datasourceId,
 } = parameters;
@@ -40,10 +41,14 @@ const ingest = async () => {
 
       const uploadRes = await uploadData(data.message_text, fileId);
       console.log(uploadRes.Location);
-      postPayload.media_url = `https://fs.tattle.co.in/kosh/${fileId}`;
+      postPayload.media_url = `https://fs.tattle.co.in/service/kosh/file/${fileId}`;
       const postRes = await post.create(postPayload);
       metadataPayload.fk_kosh = postRes.id;
-      await storeInMongo(metadataStoreName, metadataPayload);
+      await storeInMongo(
+        metadataStoreName,
+        metadataCollectionName,
+        metadataPayload
+      );
       reportManager.addSuccess(`Successfully ingested ${index}`);
       console.log(`Ingested ${index}`);
     } catch (err) {

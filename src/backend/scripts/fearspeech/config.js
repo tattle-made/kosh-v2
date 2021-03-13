@@ -2,7 +2,7 @@
 
 const config = {
   JSON_FILE_PATH: "fear_speech_data.json",
-  METADATA_STORE_NAME: "tattle_team_checkmate",
+  METADATA_STORE_NAME: "kosh_metadata_store",
 };
 
 module.exports = { config };
