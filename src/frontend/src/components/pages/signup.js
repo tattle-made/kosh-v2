@@ -43,12 +43,18 @@ const SignUp = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            type={"password"}
-            onChange={(event) => setPassword(event.target.value)}
-          />
+          <Box gap={"xsmall"}>
+            <TextInput
+              placeholder="Password"
+              value={password}
+              type={"password"}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <Text size={"xsmall"}>
+              Include uppercase and lower case letter, number and a special
+              character
+            </Text>
+          </Box>
         </Box>
         <Box height={"1.2em"}></Box>
         <Box direction={"row"} gap={"small"}>

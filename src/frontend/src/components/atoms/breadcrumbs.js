@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Text } from "grommet";
 import { Home } from "react-feather";
 import { Section, ContentSection } from "./section";
 import { isLoggedIn } from "../../service/user-authentication";
+import { PlainLink } from "./links";
+import { Location } from "@reach/router";
 
 /**
  * @author
@@ -16,31 +18,25 @@ const toTitleCase = (str) => {
 };
 
 const Breadcrumb = ({ location }) => {
-  const [fetching, setFetching] = useState(false);
-  //const pathItems = location.pathname.split("/").slice(2);
-  //const modifiedPathNames = pathItems.map((pathName) => toTitleCase(pathName));
+  console.log({ brec: location });
 
-  // console.log({ modifiedPathNames });
-
-  useEffect(() => {
-    setFetching(true);
-  });
-
-  return (
-    isLoggedIn() && (
-      <ContentSection>
-        <Box direction="row" align={"center"} wrap={true}>
-          <Home color={"#514E80AA"} size={32} />
-          <Text color={"#514E80AA"} weight={600}>
-            {" "}
-            &nbsp;\&nbsp;
+  return isLoggedIn() && location && location.pathname.includes("/app") ? (
+    <ContentSection>
+      <Box direction="row" align={"center"} wrap={true}>
+        <Home color={"#514E80AA"} size={32} />
+        <Text color={"#514E80AA"} weight={600}>
+          {" "}
+          &nbsp;\&nbsp;
+        </Text>
+        <PlainLink to="/app/datasource">
+          <Text size={"medium"} weight={600}>
+            Datasources
           </Text>
-          <Text size={"large"} weight={600}>
-            Datasource
-          </Text>
-        </Box>
-      </ContentSection>
-    )
+        </PlainLink>
+      </Box>
+    </ContentSection>
+  ) : (
+    <></>
   );
 };
 

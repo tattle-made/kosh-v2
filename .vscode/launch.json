@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Script",
+            "program": "${workspaceFolder}/src/backend/scripts/factcheck/index.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+            
+        },
+        
+        {
             "name": "Launch Chrome",
             "request": "launch",
             "type": "pwa-chrome",

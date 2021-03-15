@@ -3,8 +3,8 @@ const AWS = require("aws-sdk");
 AWS.config.update({
   region: "ap-south-1",
   credentials: {
-    accessKeyId: process.env.EMAILER_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.EMAILER_AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.SERVICE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.SERVICE_AWS_SECRET_ACCESS_KEY,
   },
 });
 
