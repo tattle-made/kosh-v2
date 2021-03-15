@@ -2,3 +2,7 @@
 
 node_modules/
 build/
+
+.DS_Store
+
+src/backend/scripts/checkmate/media_items
