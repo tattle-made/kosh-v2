@@ -6,6 +6,7 @@ import { BlockSection, ContentSection, Section } from "../atoms/section";
 import { ResponsiveGrid } from "../atoms/responsive-grid";
 import { PlainLink } from "../atoms/links";
 import Breadcrumb from "../atoms/breadcrumbs";
+import { graphql } from "gatsby";
 
 /**
  * @author

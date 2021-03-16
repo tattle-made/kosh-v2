@@ -38,5 +38,17 @@ module.exports = {
         bucketName: "kosh.tattle.co.in",
       },
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Kosh : Tattle's Archive of multimedia posts`,
+        short_name: `Kosh`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#E76D67`,
+        display: `standalone`,
+        icon: `src/images/app_icon.png`,
+      },
+    },
   ],
 };

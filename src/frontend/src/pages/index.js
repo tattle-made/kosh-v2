@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Image, Text, Heading, Paragraph, Button } from "grommet";
 import { ContentSection } from "../components/atoms/section";
 import Layout from "../layouts";
-import { useStaticQuery, Link } from "gatsby";
+import { useStaticQuery, Link, graphql } from "gatsby";
 
 const Index = ({ location }) => {
   const { kosh_cover } = useStaticQuery(graphql`
