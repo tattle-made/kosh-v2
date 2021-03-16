@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Text, TextInput, Button, CheckBox } from "grommet";
+import { Box, Heading, Text, TextInput, Button, CheckBox } from "grommet";
 import { signUp } from "../../service/user-authentication";
 import { navigate } from "gatsby";
 import { Link } from "../atoms/links";
@@ -36,46 +36,49 @@ const SignUp = () => {
 
   return (
     <ContentSection>
-      <BlockSection>
-        <Box gap={"small"}>
-          <TextInput
-            placeholder="Email address"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <Box gap={"xsmall"}>
+      <Box align={"center"}>
+        <BlockSection>
+          <Box gap={"small"}>
+            <Heading level={2}>Sign Up</Heading>
             <TextInput
-              placeholder="Password"
-              value={password}
-              type={"password"}
-              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Email address"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
-            <Text size={"xsmall"}>
-              Include uppercase and lower case letter, number and a special
-              character
+            <Box gap={"xsmall"}>
+              <TextInput
+                placeholder="Password"
+                value={password}
+                type={"password"}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              <Text size={"xsmall"}>
+                Include uppercase and lower case letter, number and a special
+                character
+              </Text>
+            </Box>
+          </Box>
+          <Box height={"1.2em"}></Box>
+          <Box direction={"row"} gap={"small"}>
+            <CheckBox
+              checked={checked}
+              onChange={(event) => setChecked(event.target.checked)}
+            />
+            <Text size={"small"}>
+              I have read the&nbsp;
+              <Link to={"/terms-of-service"}>terms of service </Link>
             </Text>
           </Box>
-        </Box>
-        <Box height={"1.2em"}></Box>
-        <Box direction={"row"} gap={"small"}>
-          <CheckBox
-            checked={checked}
-            onChange={(event) => setChecked(event.target.checked)}
-          />
-          <Text size={"small"}>
-            I have read the&nbsp;
-            <Link to={"/terms-of-service"}>terms of service </Link>
-          </Text>
-        </Box>
-        <Box height={"2em"}></Box>
+          <Box height={"2em"}></Box>
 
-        <Button
-          disabled={!isSignUpAllowed()}
-          primary
-          label={"Sign Up"}
-          onClick={onSignUpClicked}
-        />
-      </BlockSection>
+          <Button
+            disabled={!isSignUpAllowed()}
+            primary
+            label={"Sign Up"}
+            onClick={onSignUpClicked}
+          />
+        </BlockSection>
+      </Box>
     </ContentSection>
   );
 };

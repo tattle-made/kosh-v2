@@ -23,7 +23,9 @@ const VisualLayout = ({ children, location }) => {
       <Breadcrumb location={location} />
 
       <Box flex={"grow"}>
-        <ContentSection>{children}</ContentSection>
+        <Box width={"large"} alignSelf={"center"}>
+          <ContentSection>{children}</ContentSection>
+        </Box>
         {notification.visibility && (
           <Layer
             position="bottom-left"
