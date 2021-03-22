@@ -5,3 +5,8 @@ export const NotificationContext = createContext({
   visibility: false,
   message: "",
 });
+
+export const SearchContext = createContext({
+  visibility: false,
+  payload: {},
+});

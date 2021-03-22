@@ -18,7 +18,7 @@ const toTitleCase = (str) => {
 };
 
 const Breadcrumb = ({ location }) => {
-  console.log({ brec: location });
+  // console.log({ brec: location });
 
   return isLoggedIn() && location && location.pathname.includes("/app") ? (
     <ContentSection>

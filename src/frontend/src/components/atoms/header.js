@@ -5,6 +5,7 @@ import { PlainLink } from "./links";
 import { navigate } from "gatsby";
 import { isLoggedIn, logout } from "../../service/user-authentication";
 import { ContentSection } from "./section";
+import { SearchInput } from "./search-input";
 
 const UserProfileInNavigation = ({ location }) => {
   const onLogoutClicked = () => {
@@ -44,7 +45,10 @@ const Header = ({ location }) => {
         <Logo />
         <Box flex={"grow"}></Box>
         {/* <Text>{user.id}</Text> */}
-        <UserProfileInNavigation location={location} />
+        <Box gap={"large"} direction={"row"}>
+          <SearchInput />
+          <UserProfileInNavigation location={location} />
+        </Box>
       </Box>
     </ContentSection>
   );

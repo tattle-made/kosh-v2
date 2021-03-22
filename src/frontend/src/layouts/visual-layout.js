@@ -1,18 +1,29 @@
-import React, { useState, useContext } from "react";
-import { Box, Text, Layer, Button } from "grommet";
+import React, { useState, useContext, useRef } from "react";
+import { Box, Text, Layer, Button, Card } from "grommet";
 import SEO from "../components/atoms/seo";
 import Header from "../components/atoms/header";
 import { ContentSection, BlockSection } from "../components/atoms/section";
 import Footer from "../components/atoms/footer";
 import { X } from "react-feather";
-import { NotificationContext } from "../components/atoms/context";
+import {
+  NotificationContext,
+  SearchContext,
+} from "../components/atoms/context";
 import Breadcrumb from "../components/atoms/breadcrumbs";
+import { SearchInputExpanded } from "../components/atoms/search-input";
 
 const VisualLayout = ({ children, location }) => {
   const { notification, setNotification } = useContext(NotificationContext);
+  const { search, setSearch } = useContext(SearchContext);
+  const headerRef = useRef();
 
   const onCloseNotification = () => {
     setNotification({ visibility: false, message: "" });
+  };
+
+  const onCloseSearch = () => {
+    console.log("hilowss");
+    setSearch({ visibility: false, payload: {} });
   };
 
   return (
@@ -51,6 +62,19 @@ const VisualLayout = ({ children, location }) => {
                 </Box>
               </Box>
             </BlockSection>
+          </Layer>
+        )}
+        {search.visibility && (
+          <Layer
+            animate={false}
+            plain={true}
+            onEsc={onCloseSearch}
+            onClickOutside={onCloseSearch}
+            position={"top-right"}
+            margin={"medium"}
+            modal={true}
+          >
+            <SearchInputExpanded />
           </Layer>
         )}
       </Box>
