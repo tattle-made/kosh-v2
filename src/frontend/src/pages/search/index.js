@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useEffect } from "react";
 import { ResponsiveContext, Heading, Box, Text } from "grommet";
 import Layout from "../../layouts";
+import { parse } from "query-string";
 import { ContentSection } from "../../components/atoms/section";
 import SearchResult from "../../components/atoms/search-result";
 import SearchFilter from "../../components/atoms/search-filter";
@@ -380,6 +381,7 @@ const data = results.posts.posts;
 
 export default function Index({ location }) {
   const size = React.useContext(ResponsiveContext);
+  const searchParams = parse(location.search);
 
   return (
     <Layout location={location}>
@@ -387,8 +389,7 @@ export default function Index({ location }) {
         <Box flex={"grow"}>
           <Box gap={"medium"} direction={"row-responsive"}>
             <SearchFilter datasourceId={"abcd-ef"} />
-
-            <SearchResult data={data} />
+            <SearchResult data={data} query={searchParams} />
           </Box>
         </Box>
       </ContentSection>

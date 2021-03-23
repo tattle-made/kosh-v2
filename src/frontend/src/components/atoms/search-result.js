@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ResponsiveContext, Heading, Box, Text } from "grommet";
 import DataTable from "react-data-table-component";
 import SinglePost from "../../components/atoms/single-post";
 import { DateTime } from "luxon";
+import { SearchContext } from "./context";
 
 const StyledDataTable = styled(DataTable)`
   .rdt_table : {
@@ -19,8 +20,29 @@ function ExpandedSinglePost({ data }) {
   );
 }
 
-const SearchResult = ({ data }) => {
+const SearchResult = ({ data, query }) => {
   const size = useContext(ResponsiveContext);
+  const { search, setSearch } = useContext(SearchContext);
+
+  useEffect(() => {
+    if (search.visibility === false && search.payload != undefined) {
+      if (search.payload.searchString != undefined) {
+        console.log("searching text ", search);
+      } else if (search.payload.acceptedFiles != undefined) {
+        console.log("searching image ", search);
+      }
+    }
+    // return () => {
+    //   //cleanup
+    // };
+  }, [search]);
+
+  useEffect(() => {
+    console.log({ query });
+    return () => {
+      // cleanup
+    };
+  }, [query]);
 
   const columns = [
     {

@@ -4,6 +4,7 @@ import { Search } from "react-feather";
 import theme from "./theme";
 import styled from "styled-components";
 import { Upload } from "react-feather";
+import { navigate } from "gatsby";
 
 import Dropzone from "react-dropzone";
 import { SearchContext } from "./context";
@@ -39,17 +40,24 @@ const SearchInput = () => {
 const SearchInputExpanded = () => {
   const fileUploader = useRef(null);
   const [searchString, setSearchString] = React.useState("");
+  const { search, setSearch } = useContext(SearchContext);
 
   const onDrop = (acceptedFiles) => {
     console.log("==files==");
     console.log(acceptedFiles);
+    navigate("/search");
+    setSearch({ visibility: false, payload: { acceptedFiles } });
   };
 
-  const onSearchQueryEntered = () => {};
+  const onSearchQueryEntered = () => {
+    console.log(searchString);
+    navigate("/search");
+    setSearch({ visibility: false, payload: { searchString } });
+  };
 
   return (
     <Card background={"light-1"}>
-      <Box pad={"small"} width={"medium"}>
+      <Box pad={"small"}>
         <Box gap={"small"}>
           <Dropzone onDrop={onDrop}>
             {({ getRootProps, getInputProps }) => (
@@ -76,7 +84,7 @@ const SearchInputExpanded = () => {
               or
             </Text>
           </Box>
-          <Keyboard onEnter={() => console.log("Enter Pressed")}>
+          <Keyboard onEnter={onSearchQueryEntered}>
             <TextInput
               placeholder="Search"
               value={searchString}

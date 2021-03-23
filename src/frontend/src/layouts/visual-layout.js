@@ -22,7 +22,7 @@ const VisualLayout = ({ children, location }) => {
   };
 
   const onCloseSearch = () => {
-    console.log("hilowss");
+    // console.log("hilowss");
     setSearch({ visibility: false, payload: {} });
   };
 
@@ -35,7 +35,7 @@ const VisualLayout = ({ children, location }) => {
         <Breadcrumb location={location} />
       </Box>
 
-      <Box fill>
+      <Box fill ref={headerRef}>
         <Box>{children}</Box>
         {notification.visibility && (
           <Layer
@@ -71,8 +71,9 @@ const VisualLayout = ({ children, location }) => {
             onEsc={onCloseSearch}
             onClickOutside={onCloseSearch}
             position={"top-right"}
-            margin={"medium"}
+            margin={"small"}
             modal={true}
+            target={headerRef.current}
           >
             <SearchInputExpanded />
           </Layer>

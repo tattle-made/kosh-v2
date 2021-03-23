@@ -9,4 +9,7 @@ Tasks
 - Add an export to .csv action for group select
 
 - Add hover state to singlepost
+
   - open in external tab, expand within site
+
+- make search-result.js component such that it can respond to changes in the search context or the query string for /search
