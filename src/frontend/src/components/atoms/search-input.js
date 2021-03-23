@@ -1,5 +1,5 @@
 import React, { useRef, useContext } from "react";
-import { Box, Text, Button, Card, TextInput } from "grommet";
+import { Box, Text, Button, Card, TextInput, Keyboard } from "grommet";
 import { Search } from "react-feather";
 import theme from "./theme";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { Upload } from "react-feather";
 
 import Dropzone from "react-dropzone";
 import { SearchContext } from "./context";
+import { PlainLink } from "./links";
 const InvisibleFileUploadButton = styled.input`
   background: red;
   display: none;
@@ -44,6 +45,8 @@ const SearchInputExpanded = () => {
     console.log(acceptedFiles);
   };
 
+  const onSearchQueryEntered = () => {};
+
   return (
     <Card background={"light-1"}>
       <Box pad={"small"} width={"medium"}>
@@ -68,14 +71,26 @@ const SearchInputExpanded = () => {
               </Box>
             )}
           </Dropzone>
-          <TextInput
-            placeholder="type here"
-            value={searchString}
-            onChange={(event) => setSearchString(event.target.value)}
-          />
+          <Box alignSelf={"center"}>
+            <Text size={"small"} color={"dark-4"}>
+              or
+            </Text>
+          </Box>
+          <Keyboard onEnter={() => console.log("Enter Pressed")}>
+            <TextInput
+              placeholder="Search"
+              value={searchString}
+              onChange={(event) => setSearchString(event.target.value)}
+            />
+          </Keyboard>
         </Box>
         <Box height={"1em"} />
-        <Button secondary label={"Search"} focusIndicator={false} />
+        <Box align={"end"}>
+          <PlainLink to={"/search-tips"}>
+            <Text size={"xsmall"}> Search tips</Text>
+          </PlainLink>
+        </Box>
+        {/* <Button secondary label={"Search"} focusIndicator={false} /> */}
       </Box>
     </Card>
   );
