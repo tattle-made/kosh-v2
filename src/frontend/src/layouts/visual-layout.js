@@ -71,9 +71,8 @@ const VisualLayout = ({ children, location }) => {
             onEsc={onCloseSearch}
             onClickOutside={onCloseSearch}
             position={"top-right"}
-            margin={"small"}
+            margin={"medium"}
             modal={true}
-            target={headerRef.current}
           >
             <SearchInputExpanded />
           </Layer>

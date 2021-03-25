@@ -15,7 +15,7 @@ const PostDetails = ({ datasourceId, postId }) => {
     console.log({ datasourceId, postId });
     axios
       .get(
-        `https://kosh-server-v2.tattle.co.in/datasource/${datasourceId}/posts/${postId}`,
+        `${process.env.KOSH_API_URL}/datasource/${datasourceId}/posts/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

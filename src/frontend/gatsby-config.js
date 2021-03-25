@@ -41,7 +41,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Kosh : Tattle's Archive of multimedia posts`,
+        name: `Kosh : An Archive of multimedia posts`,
         short_name: `Kosh`,
         start_url: `/`,
         background_color: `#ffffff`,

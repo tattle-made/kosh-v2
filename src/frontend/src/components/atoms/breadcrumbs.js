@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "grommet";
-import { Home } from "react-feather";
+import { Folder } from "react-feather";
 import { Section, ContentSection } from "./section";
 import { isLoggedIn } from "../../service/user-authentication";
 import { PlainLink } from "./links";
@@ -18,21 +18,44 @@ const toTitleCase = (str) => {
 };
 
 const Breadcrumb = ({ location }) => {
-  // console.log({ brec: location });
+  console.log({ brec: location });
 
   return isLoggedIn() && location && location.pathname.includes("/app") ? (
     <ContentSection>
-      <Box direction="row" align={"center"} wrap={true}>
-        <Home color={"#514E80AA"} size={32} />
-        <Text color={"#514E80AA"} weight={600}>
-          {" "}
-          &nbsp;\&nbsp;
-        </Text>
-        <PlainLink to="/app/datasource">
-          <Text size={"medium"} weight={600}>
-            Datasources
-          </Text>
-        </PlainLink>
+      <Box direction="row-responsive" align={"center"} gap={"xxsmall"}>
+        {location.pathname
+          .split("/")
+          .slice(1)
+          .map((pathItem, index) => {
+            if (pathItem === "app") {
+              return (
+                <Box direction={"row"} align={"center"} gap={"xxsmall"}>
+                  <Folder color={"#514E80AA"} size={16} />
+                  <Text size={"small"} weight={200} color={"dark-3"}>
+                    /
+                  </Text>
+                </Box>
+              );
+            } else {
+              return (
+                <Box direction={"row"} align={"center"} gap={"xxsmall"}>
+                  <PlainLink
+                    to={location.pathname
+                      .split("/")
+                      .slice(0, index + 1)
+                      .join("/")}
+                  >
+                    <Text size={"small"} weight={400}>
+                      {"  " + pathItem}
+                    </Text>
+                  </PlainLink>
+                  <Text size={"small"} weight={200} color={"dark-3"}>
+                    /
+                  </Text>
+                </Box>
+              );
+            }
+          })}
       </Box>
     </ContentSection>
   ) : (
