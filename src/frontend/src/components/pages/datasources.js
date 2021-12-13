@@ -49,7 +49,6 @@ const DataSources = ({ location }) => {
     <ContentSection>
       <Box direction={"column"}>
         <Section>
-          <Text size={"large"}>Datasources</Text>
           <ResponsiveGrid>
             {/* <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink

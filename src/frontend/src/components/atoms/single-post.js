@@ -41,7 +41,7 @@ const SinglePost = ({ id, type, src, preview, heading, body, timestamp }) => {
   const postClicked = () => {
     console.log("clicked", id);
     console.log(location);
-    navigate(`${location.pathname}/post/${id}`);
+    navigate(`${location.pathname}/${id}`);
   };
 
   const onMouseEnter = () => setHover(true);

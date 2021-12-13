@@ -41,7 +41,7 @@ const PostDetails = ({ datasourceId, postId }) => {
     <ContentSection>
       <Box direction={"column"}>
         <Section>
-          <Box direction={"row-responsive"} gap={"medium"} align={"baseline"}>
+          {/* <Box direction={"row-responsive"} gap={"medium"} align={"baseline"}>
             <Text size={"large"}>Post Detail</Text>
             <Box
               round={"small"}
@@ -56,7 +56,7 @@ const PostDetails = ({ datasourceId, postId }) => {
                 <ArrowDown />
               </PlainExternalLink>
             </Box>
-          </Box>
+          </Box> */}
 
           <Box direction={"column"} margin={{ top: "medium" }} gap={"medium"}>
             {detail && detail.post && (

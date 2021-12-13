@@ -18,11 +18,14 @@ const toTitleCase = (str) => {
 };
 
 const Breadcrumb = ({ location }) => {
-  console.log({ brec: location });
-
   return isLoggedIn() && location && location.pathname.includes("/app") ? (
     <ContentSection>
-      <Box direction="row-responsive" align={"center"} gap={"xxsmall"}>
+      <Box
+        direction="row-responsive"
+        align={"bottom"}
+        alignContent={"end"}
+        gap={"xxsmall"}
+      >
         {location.pathname
           .split("/")
           .slice(1)
@@ -30,7 +33,7 @@ const Breadcrumb = ({ location }) => {
             if (pathItem === "app") {
               return (
                 <Box direction={"row"} align={"center"} gap={"xxsmall"}>
-                  <Folder color={"#514E80AA"} size={16} />
+                  <Folder color={"#514E80AA"} size={14} strokeWidth={"2px"} />
                   <Text size={"small"} weight={200} color={"dark-3"}>
                     /
                   </Text>
@@ -42,10 +45,10 @@ const Breadcrumb = ({ location }) => {
                   <PlainLink
                     to={location.pathname
                       .split("/")
-                      .slice(0, index + 1)
+                      .slice(0, index + 2)
                       .join("/")}
                   >
-                    <Text size={"small"} weight={400}>
+                    <Text size={"small"} weight={200} color={"dark-1"}>
                       {"  " + pathItem}
                     </Text>
                   </PlainLink>

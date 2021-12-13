@@ -34,7 +34,7 @@ const App = ({ location }) => {
         />
         <PrivateRoute
           component={PostDetails}
-          path={"/datasource/:datasourceId/post/:postId"}
+          path={"/datasource/:datasourceId/:postId"}
         />
         <DisabledForLoggedInUser component={Login} path={"/login"} />
         <DisabledForLoggedInUser component={SignUp} path={"/sign-up"} />
