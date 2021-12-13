@@ -19,6 +19,7 @@ const create = async ({ email, password, verified }) => {
         email,
         password: hashedPassword,
         status: verified ? "verified" : "unverified",
+        role: "author",
       });
       return newUser;
     } else {
