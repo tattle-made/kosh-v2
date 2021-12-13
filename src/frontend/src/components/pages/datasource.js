@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Heading, Text } from "grommet";
 import { BlockSection, ContentSection, Section } from "../atoms/section";
-import DataFeed from "../atoms/DataFeed";
+import DataFeed from "../atoms/datafeed";
 
 const datasourceToCollectionMap = {
   "7c62d659-8294-11eb-bd02-0242ac120004": "Fact Check Article Media Items",

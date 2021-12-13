@@ -25,9 +25,8 @@
   },
   "homepage": "https://github.com/tattle-made/kosh#readme",
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.1",
     "aws-sdk": "^2.843.0",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "5.0.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.3",
     "cors": "^2.8.5",
