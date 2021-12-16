@@ -14,9 +14,14 @@ const UserProfileInNavigation = ({ location }) => {
   };
 
   return isLoggedIn() ? (
-    <Button plain onClick={onLogoutClicked}>
-      <Text size={"small"}>Logout</Text>
-    </Button>
+    <Box direction={"row"} gap={"medium"} align={"center"}>
+      <PlainLink to={"/app/tokens"}>
+        <Text size={"small"}>Tokens</Text>
+      </PlainLink>
+      <Button plain onClick={onLogoutClicked}>
+        <Text size={"small"}>Logout</Text>
+      </Button>
+    </Box>
   ) : (
     <Box direction={"row"} gap={"medium"} align={"center"}>
       <PlainLink to={"/app/login"}>
