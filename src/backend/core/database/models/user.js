@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     static associate(models) {
       // define association here
+      user.hasMany(models.accessToken, {as: 'accessTokens'})
     }
     getPublicProfile() {
       return {

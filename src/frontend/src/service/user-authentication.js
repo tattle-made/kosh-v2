@@ -1,4 +1,5 @@
-import { get, post } from "./backend";
+import { post } from "./backend";
+import axios from "axios";
 
 export const signUp = async (email, password) => {
   try {
@@ -11,7 +12,7 @@ export const signUp = async (email, password) => {
 };
 export const emailVerification = async (token) => {
   try {
-    const response = await get(`/auth/email-verification?token=${token}`);
+    const response = await axios.get(`/auth/email-verification?token=${token}`);
     return response.data;
   } catch (err) {
     console.log("Error Verifying Token", err);

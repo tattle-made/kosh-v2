@@ -6,6 +6,7 @@ const {
 const {
   configureRoutes: configureDataRoutes,
 } = require("./app/data-source/index");
+const { configure: configureUserRoutes } = require("./app/user/index")
 const config = require("config");
 const { connect: connectToMongo } = require("./core/mongo");
 
@@ -15,6 +16,7 @@ configure(expressApp);
 configureHealthCheck(expressApp);
 configureAuthentication(expressApp);
 configureDataRoutes(expressApp);
+configureUserRoutes(expressApp)
 
 const startServer = async () => {
   await connectToMongo();
