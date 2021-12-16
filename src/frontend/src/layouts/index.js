@@ -4,6 +4,7 @@ import theme from "../components/atoms/theme";
 import {
   NotificationContext,
   SearchContext,
+  UserContext,
 } from "../components/atoms/context";
 import VisualLayout from "./visual-layout";
 
@@ -24,13 +25,19 @@ const Layout = ({ children, ...rest }) => {
     visibility: false,
     payload: {},
   });
+
+  const [user, setUser] = useState({
+    user: null,
+  });
   return (
     <Grommet theme={theme} full>
-      <NotificationContext.Provider value={{ notification, setNotification }}>
-        <SearchContext.Provider value={{ search, setSearch }}>
-          <VisualLayout {...rest}> {children}</VisualLayout>
-        </SearchContext.Provider>
-      </NotificationContext.Provider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <NotificationContext.Provider value={{ notification, setNotification }}>
+          <SearchContext.Provider value={{ search, setSearch }}>
+            <VisualLayout {...rest}> {children}</VisualLayout>
+          </SearchContext.Provider>
+        </NotificationContext.Provider>
+      </UserContext.Provider>
     </Grommet>
   );
 };
