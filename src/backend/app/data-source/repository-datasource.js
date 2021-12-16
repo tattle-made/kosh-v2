@@ -3,7 +3,7 @@ const { post, datasource } = db.sequelize.models;
 
 const PAGE_SIZE = 30;
 
-let datasources = {};
+let datasets = {};
 
 /**
  * This implements a trivial in memory caching mechanism.
@@ -11,15 +11,16 @@ let datasources = {};
  */
 const getDatasourceById = async (id) => {
   try {
-    if (!datasources[id]) {
+    if (!datasets[id]) {
+      console.log("fetching from db");
       const dataset = await datasource.findOne({ where: { id } });
       if (dataset) {
-        datasources[id] = dataset.get({ plain: true });
+        datasets[id] = dataset.get({ plain: true });
       } else {
         return undefined;
       }
     }
-    return datasources[id];
+    return datasets[id];
   } catch (err) {
     console.log("Error : Could not get Datasets");
     throw err;

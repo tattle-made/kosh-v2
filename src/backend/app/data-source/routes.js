@@ -21,6 +21,11 @@ const configure = (expressApp) => {
       res.status(StatusCodes.OK).send({ posts: posts });
     }
   });
+  expressApp.post("/datasets/:datasetId/posts", async (req, res) => {
+    const result = await req.accessCondition(req);
+    console.log({ RESULT: result });
+    res.status(StatusCodes.OK).send({ message: "ok" });
+  });
   expressApp.get(
     "/datasource/:datasourceId/posts/:postId",
     async (req, res) => {

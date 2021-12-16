@@ -4,6 +4,7 @@ const {
   authenticationMiddleware,
 } = require("../../app/user-authentication/middleware-authentication");
 const cors = require("cors");
+const { authorizationMiddleware } = require("./middleware-authorization");
 
 const expressApp = express();
 
@@ -25,6 +26,7 @@ const configure = (expressApp) => {
   expressApp.use(bodyParser.urlencoded());
   expressApp.use(bodyParser.json());
   expressApp.use(authenticationMiddleware);
+  expressApp.use(authorizationMiddleware);
   return expressApp;
 };
 

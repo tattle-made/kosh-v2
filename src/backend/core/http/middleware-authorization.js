@@ -6,8 +6,9 @@ const {
 const isCreatorOfDataset = async (req) => {
   const { datasetId } = req.params;
   const { user } = req;
+  console.log({ datasetId });
   const dataset = await getDatasourceById(datasetId);
-  return dataset.creator == user.id;
+  return dataset != undefined && dataset.creator === user.id;
 };
 
 // everyone has read access to a post if they have a token
@@ -16,7 +17,7 @@ const isCreatorOfDataset = async (req) => {
 // this is great coz all the parameters needed to check condition is in req
 // so
 const routesPermissionsMap = {
-  "/api/datasets/:datasetId/posts/:postId": {
+  datasets: {
     GET: ["admin", "author", "viewer"],
     POST: [
       "admin",
@@ -35,23 +36,22 @@ const routesPermissionsMap = {
  */
 const authorizationMiddleware = async (req, res, next) => {
   const { user } = req;
-  if (user) {
+  if (user.id) {
     if (user.role === "admin") {
       next();
     } else {
-      // rolecheck
-      const rolesAllowedOnThisRoute = routesPermissionsMap[req.path][req.type];
-      const { role, condition } = [
-        rolesAllowedOnThisRoute.filter((role) => role.role === user.role),
-      ][0];
-      if (role) {
-        if (condition(req)) {
-          next();
-        }
-        res
-          .status(StatusCodes.FORBIDDEN)
-          .message("You are not authorized to access this resource");
-      }
+      const url = req.originalUrl.split("?")[0];
+      const resource = url.split("/")[1];
+      const action = req.method;
+      const role = user.role;
+
+      console.log({ resource, action, user: user.id });
+      const conditions = routesPermissionsMap[resource][action];
+      const condition = conditions.filter(
+        (cond) => cond === role || cond.role === role
+      )[0];
+      req.accessCondition = condition.condition;
+      next();
     }
   }
 };
