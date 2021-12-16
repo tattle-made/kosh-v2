@@ -5,8 +5,13 @@ const db = require("../../core/database/models");
 const { accessToken: AccessToken } = db.sequelize.models;
 
 const createToken = async (request, response) => {
+    const user = {
+        id: request.user.id,
+        username: request.user.username,
+        role: request.user.role
+    }
     const accessToken = jwt.sign(
-        request.user,
+        user,
         process.env.ACCESS_TOKEN_SECRET,
     );
     try {
