@@ -1,14 +1,16 @@
 const axios = require("axios");
 const path = require("path");
 const { v4: uuid } = require("uuid");
+const fs = require("fs")
 require("dotenv").config({
     path: path.join(__dirname, "development.env"),
 });
 const stories = require("./fear_speech_data.json")
 
-const accessToken = "access-token";
+const accessToken = process.env.ACCESS_TOKEN;
 const datasource = "efb05069-e220-4b82-8849-98d14bffdafd";
 
+const failedRequestsFile = "fear-speech-failed-requests.json";
 const insertPost = async () => {
     const posts = []
     for (const post of Object.values(stories)) {
@@ -23,13 +25,29 @@ const insertPost = async () => {
             datasource
         })
     }
+    const result = {totalPosts: posts.length, failed: []}
     const batchSize = 100;
     for (let i = 0, j = posts.length; i < j; i += batchSize) {
         const batch = posts.slice(i, i + batchSize);
-        await axios.post(process.env.API_URL + `/datasource/${datasource}/posts`, batch, {
-            headers: { Authorization: "Bearer " + accessToken },
-        })
+        try {
+            await axios.post(
+                process.env.API_URL + `/datasource/${datasource}/posts`,
+                { posts: batch },
+                { headers: { Authorization: "Bearer " + accessToken },
+            })
+        } catch (e) {
+            console.log(e)
+            result.failed.push(...batch)
+            continue
+        }
     }
+    console.log('\n')
+    if (result.failed.length) {
+        fs.writeFileSync(failedRequestsFile, JSON.stringify(result.failed), {encoding: 'utf-8'})
+        console.log(`check ${failedRequestsFile} file for failed posts`)
+    }
+    console.log("Total Posts: " + result.totalPosts)
+    console.log("Failed: " + result.failed.length)
     console.log("done")
     process.exit(0)
 }

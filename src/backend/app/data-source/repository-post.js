@@ -27,7 +27,7 @@ const getPostById = async (datasourceId, postId) => {
   }
 };
 
-const createPost = async (posts, user) => {
+const createPost = async (posts) => {
   try {
     return await post.bulkCreate(posts, {returning: true});
   } catch (err) {

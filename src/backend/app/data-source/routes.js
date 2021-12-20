@@ -42,21 +42,11 @@ const configure = (expressApp) => {
     "/datasource/:datasourceId/posts",
     async (req, res) => {
       try {
-        if (!Array.isArray(req.body)) {
+        if (!Array.isArray(req.body.posts)) {
           throw new Error("Error: body should be array")
         }
-        req.body.forEach((post) => post.creator = req.user.id)
-        await createPost(req.body);
-        const writeOperation = req.body.map((post) => {
-          return {
-            updateOne: {
-              filter: { "docs.doc_id": post.doc_id },
-              update: { $set: { "docs.$[element].e_kosh_id": post.id }},
-              arrayFilters: [{"element.doc_id": post.doc_id}]
-            }
-          }
-        })
-        await bulkWrite("kosh_metadata", "stories", writeOperation)
+        req.body.posts.forEach((post) => post.creator = req.user.id)
+        await createPost(req.body.posts);
         res.status(StatusCodes.OK).send({});
       } catch (err) {
         console.log(err);
