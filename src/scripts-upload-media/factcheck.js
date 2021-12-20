@@ -83,7 +83,7 @@ const insertPosts = async () => {
         fs.writeFileSync(failedRequestsFile, JSON.stringify(result.failed), {encoding: 'utf-8'})
         console.log(`check '${failedRequestsFile}' file for failed posts`)
     }
-    console.log("UnknownMediaTypes: " +  unknownMediaTypes.size ? unknownMediaTypes : "None")
+    console.log("UnknownMediaTypes: " +  (unknownMediaTypes.size ? unknownMediaTypes : "None"))
     console.log("Total Posts: " + result.totalPosts)
     console.log("Failed: " + result.failed.length)
     console.log("Done")
