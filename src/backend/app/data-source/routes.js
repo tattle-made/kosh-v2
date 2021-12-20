@@ -4,6 +4,8 @@ const {
   getPostFromDatasourceByType,
 } = require("./repository-datasource");
 const { getPostById } = require("./repository-post");
+const { guard } = require("../../core/http/middleware-authorization");
+const { middleware: guardMiddleware, allow, block } = guard;
 
 const configure = (expressApp) => {
   expressApp.get("/datasource/:datasourceId/posts", async (req, res) => {
@@ -21,11 +23,19 @@ const configure = (expressApp) => {
       res.status(StatusCodes.OK).send({ posts: posts });
     }
   });
-  expressApp.post("/datasets/:datasetId/posts", async (req, res) => {
-    const result = await req.accessCondition(req);
-    console.log({ RESULT: result });
-    res.status(StatusCodes.OK).send({ message: "ok" });
-  });
+  expressApp.post(
+    "/datasets/:datasetId/posts",
+    guardMiddleware([
+      block("viewer"),
+      allow("admin").onCondition(isCreatorOfDataset),
+      allow("uploader").onCondition(isCreatorOfDataset),
+    ]),
+    async (req, res) => {
+      const result = await req.accessCondition(req);
+      console.log({ RESULT: result });
+      res.status(StatusCodes.OK).send({ message: "ok" });
+    }
+  );
   expressApp.get(
     "/datasource/:datasourceId/posts/:postId",
     async (req, res) => {

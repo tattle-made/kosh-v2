@@ -11,51 +11,48 @@ const isCreatorOfDataset = async (req) => {
   return dataset != undefined && dataset.creator === user.id;
 };
 
-// everyone has read access to a post if they have a token
-// users can only update or post new data if they own the dataset
-// todo define sql calls etc to check ownership checks
-// this is great coz all the parameters needed to check condition is in req
-// so
-const routesPermissionsMap = {
-  datasets: {
-    GET: ["admin", "author", "viewer"],
-    POST: [
-      "admin",
-      { role: "author", condition: isCreatorOfDataset },
-      { role: "reader", condition: isCreatorOfDataset },
-    ],
+/**
+ * @param {function} role is a user's role. expedted values = "viewer", "author", "editor"
+ * @returns an instruction. its shape is {role:condition}, where condition is a function that returns true or false
+ * conditionType can only be "allow" or "block" for now
+ */
+const ConditionFactory = (conditionType) => {
+  return (role) => {
+    let instruction = {
+      [role]: () =>
+        conditionType === "allow"
+          ? true
+          : conditionType === "block"
+          ? false
+          : true,
+    };
+
+    return {
+      ...instruction,
+      onCondition: (func) => {
+        return {  [role]: func  };
+      },
+    };
+  };
+},
+
+const guard = {
+  allow: ConditionFactory("allow"),
+  block: ConditionFactory("block"),
+  middleware: (instructions) => {
+    return async function (req, res, next) {
+      for (let i = 0; i < instructions.length; i++) {
+        const requestShouldProceed = await instructions.condition(req);
+        if (requestShouldProceed) {
+          next();
+        } else {
+          res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
+        }
+      }
+    };
   },
 };
 
-/**
- * This middleware does
- * 1. role check : send 401 Forbidden status if the user does not have apt role to access
- * an endpoint
- * 2. ownership check : sends 401 Forbidden status if the user does not own the resource
- * specified in the request
- */
-const authorizationMiddleware = async (req, res, next) => {
-  const { user } = req;
-  if (user.id) {
-    if (user.role === "admin") {
-      next();
-    } else {
-      const url = req.originalUrl.split("?")[0];
-      const resource = url.split("/")[1];
-      const action = req.method;
-      const role = user.role;
-
-      console.log({ resource, action, user: user.id });
-      const conditions = routesPermissionsMap[resource][action];
-      const condition = conditions.filter(
-        (cond) => cond === role || cond.role === role
-      )[0];
-      req.accessCondition = condition.condition;
-      next();
-    }
-  }
-};
-
 module.exports = {
-  authorizationMiddleware,
+  guard,
 };
