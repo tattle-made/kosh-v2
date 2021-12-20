@@ -1,0 +1,9 @@
+{
+  "name": "@tattle-made/kosh-upload-media-bot",
+  "dependencies": {
+    "aws-sdk": "^2.1046.0",
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
+  }
+}
