@@ -6,6 +6,7 @@ require("dotenv").config({
 });
 const fs = require("fs")
 
+const FACTCHECK_DB = "kosh_metadata"
 const accessToken = process.env.ACCESS_TOKEN;
 const datasource = "60212d4c-e870-46a6-907b-88ef39e0b88f";
 const knownMediaTypes = ['text', 'image', 'video'];
@@ -17,7 +18,7 @@ const insertPosts = async () => {
     await connect()
 
     const stories = await get(
-        "kosh_metadata",
+        FACTCHECK_DB,
         "stories",
         { "docs.e_kosh_id": { $exists: false }, "docs.mediaType": { $nin: ignoreMediaTypes } },
         { limit: 100, skip: 0 }
@@ -38,8 +39,8 @@ const insertPosts = async () => {
             if (post.mediaType === "text" && !post.s3URL) {
                 const fileId = uuid();
                 const { uploadData } = require("./s3");
-                const awsResponse = await uploadData(post.content, fileId);
-                post.s3URL = awsResponse.Location
+                await uploadData(post.content, fileId);
+                post.s3URL = "https://fs.tattle.co.in/service/kosh/file/" + fileId
             }
             posts.push({
                 id: uuid(),

@@ -16,8 +16,8 @@ const insertPost = async () => {
     for (const post of Object.values(stories)) {
         const fileId = uuid();
         const { uploadData } = require("./s3");
-        const awsResponse = await uploadData(post.message_text, fileId);
-        post.s3URL = awsResponse.Location
+        await uploadData(post.message_text, fileId);
+        post.s3URL = "https://fs.tattle.co.in/service/kosh/file/" + fileId
         posts.push({
             type: "text",
             media_url: post.s3URL,
