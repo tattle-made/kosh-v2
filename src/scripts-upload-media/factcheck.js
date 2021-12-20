@@ -13,7 +13,7 @@ const ignoreMediaTypes = ['tweet', 'facebook', 'instagram'];
 const failedRequestsFile = "factcheck-failed-requests.json";
 
 const insertPosts = async () => {
-    const { connect, get } = require("../backend/core/mongo/index")
+    const { connect, get, bulkWrite } = require("../backend/core/mongo/index")
     await connect()
 
     const stories = await get(

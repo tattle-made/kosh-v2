@@ -1,5 +1,4 @@
 const { StatusCodes } = require("http-status-codes");
-const { bulkWrite } = require("../../core/mongo");
 const {
   getPostFromDatasource,
   getPostFromDatasourceByType,
