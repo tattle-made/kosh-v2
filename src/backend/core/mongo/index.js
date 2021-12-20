@@ -104,4 +104,16 @@ const count = async (dbName, collectionName, condition) => {
   }
 };
 
-module.exports = { connect, store, update, get, getOne, get2, count };
+const bulkWrite = async (dbName, collectionName, operations) => {
+  try {
+    return await client
+      .db(dbName)
+      .collection(collectionName)
+      .bulkWrite(operations);
+  } catch (err) {
+    console.log(`Error : could not bulkWrite in mongo`);
+    throw err;
+  }
+};
+
+module.exports = { connect, store, update, get, getOne, get2, count, bulkWrite };

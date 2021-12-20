@@ -1,9 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
+const { bulkWrite } = require("../../core/mongo");
 const {
   getPostFromDatasource,
   getPostFromDatasourceByType,
 } = require("./repository-datasource");
-const { getPostById } = require("./repository-post");
+const { getPostById, createPost } = require("./repository-post");
 
 const configure = (expressApp) => {
   expressApp.get("/datasource/:datasourceId/posts", async (req, res) => {
@@ -28,6 +29,35 @@ const configure = (expressApp) => {
       try {
         const post = await getPostById(datasourceId, postId);
         res.status(StatusCodes.OK).send(post);
+      } catch (err) {
+        console.log(err);
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .send({ error: "Could not return post" });
+      }
+    }
+  );
+
+  expressApp.post(
+    "/datasource/:datasourceId/posts",
+    async (req, res) => {
+      try {
+        if (!Array.isArray(req.body)) {
+          throw new Error("Error: body should be array")
+        }
+        req.body.forEach((post) => post.creator = req.user.id)
+        await createPost(req.body);
+        const writeOperation = req.body.map((post) => {
+          return {
+            updateOne: {
+              filter: { "docs.doc_id": post.doc_id },
+              update: { $set: { "docs.$[element].e_kosh_id": post.id }},
+              arrayFilters: [{"element.doc_id": post.doc_id}]
+            }
+          }
+        })
+        await bulkWrite("kosh_metadata", "stories", writeOperation)
+        res.status(StatusCodes.OK).send({});
       } catch (err) {
         console.log(err);
         res

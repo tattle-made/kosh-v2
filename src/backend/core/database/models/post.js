@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   post.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV1,
+      },
       type: DataTypes.ENUM("text", "image", "video"),
       published_at: DataTypes.DATE,
       media_url: DataTypes.STRING,
