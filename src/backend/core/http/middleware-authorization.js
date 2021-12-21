@@ -1,49 +1,72 @@
 const { StatusCodes } = require("http-status-codes");
 
 /**
- * @param {function} role is a user's role. expedted values = "viewer", "author", "editor"
- * @returns an instruction. its shape is {role:condition}, where condition is a function that returns true or false
- * conditionType can only be "allow" or "block" for now
+ * Semantic Notions : This middleware is like a Guard. This Guard takes instructions of
+ * allow and block and lets requests in or out depending on whether the request meets the conditions
  */
-const ConditionFactory = (conditionType) => {
-  return (role) => {
-    let instruction = {
-      [role]: (req) =>
-        conditionType === "allow"
-          ? true
-          : conditionType === "block"
-          ? false
-          : true,
-    };
 
-    return {
-      ...instruction,
-      onCondition: (func) => {
-        return { [role]: func };
-      },
-    };
-  };
-};
+class Instruction {
+  constructor(role, condition) {
+    this.role = role;
+    this.condition = condition;
+  }
+  onCondition(func) {
+    this.condition = func;
+    return this;
+  }
+}
 
-const guard = {
-  allow: ConditionFactory("allow"),
-  block: ConditionFactory("block"),
+class InstructionFactory {
+  static MakeAllowCondition(role) {
+    return new Instruction(role, true);
+  }
+  static MakeBlockCondition(role) {
+    return new Instruction(role, false);
+  }
+}
+
+/**
+ * instruction has the shape {role, condition}
+ * role is a string with possible values "viewer", "author", "admin"
+ * condition is either a boolean or a function that returns a boolean
+ */
+const authorization = {
+  allow: (role) => InstructionFactory.MakeAllowCondition(role),
+  block: (role) => InstructionFactory.MakeBlockCondition(role),
   middleware: (instructions) => {
     return async function (req, res, next) {
-      console.log("here");
+      for (let i = 0; i < instructions.length; i++) {
+        const { user } = req;
+        const applicableInstructionsArray = instructions.filter(
+          (instruction) => instruction.role === user.role
+        );
+        let requestShouldProceed = false;
+
+        console.log(applicableInstructionsArray);
+
+        if (applicableInstructionsArray.length === 0) {
+          next();
+        } else if (applicableInstructionsArray.length === 1) {
+          const applicableInstruction = applicableInstructionsArray[0];
+          if (typeof applicableInstruction.condition === "boolean") {
+            requestShouldProceed = applicableInstruction.condition;
+          } else if (typeof applicableInstruction.condition === "function") {
+            requestShouldProceed = await applicableInstruction.condition(req);
+          }
+        } else {
+          console.log("Unexpected State");
+          return res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
+        }
+
+        if (!requestShouldProceed) {
+          return res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
+        }
+      }
       next();
-      // for (let i = 0; i < instructions.length; i++) {
-      //   const requestShouldProceed = await instructions.condition(req);
-      //   if (requestShouldProceed) {
-      //     next();
-      //   } else {
-      //     res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
-      //   }
-      // }
     };
   },
 };
 
 module.exports = {
-  guard,
+  authorization,
 };
