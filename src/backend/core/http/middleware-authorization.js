@@ -5,6 +5,11 @@ const { StatusCodes } = require("http-status-codes");
  * allow and block and lets requests in or out depending on whether the request meets the conditions
  */
 
+/**
+ * Instruction has the shape {role, condition}
+ * role is a string with possible values "viewer", "author", "admin"
+ * condition is either a boolean or a function that returns a boolean
+ */
 class Instruction {
   constructor(role, condition) {
     this.role = role;
@@ -25,11 +30,6 @@ class InstructionFactory {
   }
 }
 
-/**
- * instruction has the shape {role, condition}
- * role is a string with possible values "viewer", "author", "admin"
- * condition is either a boolean or a function that returns a boolean
- */
 const authorization = {
   allow: (role) => InstructionFactory.MakeAllowCondition(role),
   block: (role) => InstructionFactory.MakeBlockCondition(role),

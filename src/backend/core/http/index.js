@@ -26,7 +26,6 @@ const configure = (expressApp) => {
   expressApp.use(bodyParser.urlencoded());
   expressApp.use(bodyParser.json());
   expressApp.use(authenticationMiddleware);
-  // expressApp.use(authorizationMiddleware);
   return expressApp;
 };
 

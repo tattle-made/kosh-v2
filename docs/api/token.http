@@ -2,7 +2,7 @@
 
 POST http://localhost:10001/datasource/2d4bf577-ce38-4f28-ab2b-a9e529f1e9df/post
 content-type : application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5MzRiNDY1LWJjY2QtNDNjZi05MzY3LWFkYzZkODkwNjliYiIsInVzZXJuYW1lIjoiZGVtbyIsInJvbGUiOiJhdXRob3IiLCJpYXQiOjE2NDAwNTI0OTh9.ocuRN-aPH2yCQeNcA9rssJ6Mcr2EDBRnZ6uHIexkMTQ
+Authorization: Bearer {{token}}
 
 {
     "media_type" : "video"
