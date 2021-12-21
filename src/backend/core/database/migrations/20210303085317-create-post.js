@@ -4,9 +4,9 @@ module.exports = {
     await queryInterface.createTable("posts", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV1,
       },
       type: {
         type: Sequelize.ENUM("text", "image", "video"),

@@ -11,6 +11,7 @@ import {
 } from "../components/atoms/private-route";
 import Layout from "../layouts";
 import { Router } from "@reach/router";
+import Tokens from "../components/pages/tokens";
 
 /**
  * @author
@@ -35,6 +36,10 @@ const App = ({ location }) => {
         <PrivateRoute
           component={PostDetails}
           path={"/datasource/:datasourceId/:postId"}
+        />
+        <PrivateRoute
+          component={Tokens}
+          path={"/tokens"}
         />
         <DisabledForLoggedInUser component={Login} path={"/login"} />
         <DisabledForLoggedInUser component={SignUp} path={"/sign-up"} />

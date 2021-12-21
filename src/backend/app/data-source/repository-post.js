@@ -27,4 +27,13 @@ const getPostById = async (datasourceId, postId) => {
   }
 };
 
-module.exports = { getPostById };
+const createPost = async (posts) => {
+  try {
+    return await post.bulkCreate(posts, {returning: true});
+  } catch (err) {
+    console.log("Error : Could not create Post");
+    throw err;
+  }
+}
+
+module.exports = { getPostById, createPost };
