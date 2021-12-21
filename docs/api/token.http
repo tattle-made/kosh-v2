@@ -1,6 +1,6 @@
 # # Test Authorization Middleware
 
-POST http://localhost:10001/datasets/2d4bf577-ce38-4f28-ab2b-a9e529f1e9df/posts
+POST http://localhost:10001/datasource/2d4bf577-ce38-4f28-ab2b-a9e529f1e9df/posts
 content-type : application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY5MzRiNDY1LWJjY2QtNDNjZi05MzY3LWFkYzZkODkwNjliYiIsInVzZXJuYW1lIjoiZGVtbyIsInJvbGUiOiJhdXRob3IiLCJpYXQiOjE2Mzk2NDkzNjAsImV4cCI6MTYzOTczNTc2MH0.JEPYoGWfgJwQQZW0wggqoT0iV_w1DWDJJx89AFEN7Ak
 

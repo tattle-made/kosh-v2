@@ -5,6 +5,7 @@ const {
 } = require("./repository-datasource");
 const { getPostById } = require("./repository-post");
 const { guard } = require("../../core/http/middleware-authorization");
+const { isCreatorOfDataset } = require("./permissions");
 const { middleware: guardMiddleware, allow, block } = guard;
 
 const configure = (expressApp) => {
@@ -24,10 +25,10 @@ const configure = (expressApp) => {
     }
   });
   expressApp.post(
-    "/datasets/:datasetId/posts",
+    "/datasource/:datasourceId/post",
     guardMiddleware([
       block("viewer"),
-      allow("admin").onCondition(isCreatorOfDataset),
+      allow("admin"),
       allow("uploader").onCondition(isCreatorOfDataset),
     ]),
     async (req, res) => {

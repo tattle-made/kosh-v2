@@ -1,15 +1,4 @@
 const { StatusCodes } = require("http-status-codes");
-const {
-  getDatasourceById,
-} = require("../../app/data-source/repository-datasource");
-
-const isCreatorOfDataset = async (req) => {
-  const { datasetId } = req.params;
-  const { user } = req;
-  console.log({ datasetId });
-  const dataset = await getDatasourceById(datasetId);
-  return dataset != undefined && dataset.creator === user.id;
-};
 
 /**
  * @param {function} role is a user's role. expedted values = "viewer", "author", "editor"
@@ -19,7 +8,7 @@ const isCreatorOfDataset = async (req) => {
 const ConditionFactory = (conditionType) => {
   return (role) => {
     let instruction = {
-      [role]: () =>
+      [role]: (req) =>
         conditionType === "allow"
           ? true
           : conditionType === "block"
@@ -30,25 +19,27 @@ const ConditionFactory = (conditionType) => {
     return {
       ...instruction,
       onCondition: (func) => {
-        return {  [role]: func  };
+        return { [role]: func };
       },
     };
   };
-},
+};
 
 const guard = {
   allow: ConditionFactory("allow"),
   block: ConditionFactory("block"),
   middleware: (instructions) => {
     return async function (req, res, next) {
-      for (let i = 0; i < instructions.length; i++) {
-        const requestShouldProceed = await instructions.condition(req);
-        if (requestShouldProceed) {
-          next();
-        } else {
-          res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
-        }
-      }
+      console.log("here");
+      next();
+      // for (let i = 0; i < instructions.length; i++) {
+      //   const requestShouldProceed = await instructions.condition(req);
+      //   if (requestShouldProceed) {
+      //     next();
+      //   } else {
+      //     res.status(StatusCodes.FORBIDDEN).send("Unauthorized Access");
+      //   }
+      // }
     };
   },
 };
