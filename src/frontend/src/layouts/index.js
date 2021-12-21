@@ -24,6 +24,7 @@ const Layout = ({ children, ...rest }) => {
     visibility: false,
     payload: {},
   });
+
   return (
     <Grommet theme={theme} full>
       <NotificationContext.Provider value={{ notification, setNotification }}>
