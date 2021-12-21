@@ -67,6 +67,4 @@ const authorization = {
   },
 };
 
-module.exports = {
-  authorization,
-};
+module.exports = authorization;

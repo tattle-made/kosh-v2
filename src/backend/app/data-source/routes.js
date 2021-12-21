@@ -4,8 +4,12 @@ const {
   getPostFromDatasourceByType,
 } = require("./repository-datasource");
 const { getPostById, createPost } = require("./repository-post");
-const { authorization } = require("../../core/http/middleware-authorization");
-const { middleware: authorizationMiddleware, allow, block } = authorization;
+const {
+  middleware: authorizationMiddleware,
+  allow,
+  block,
+} = require("../../core/http/middleware-authorization");
+
 const { isCreatorOfDataset } = require("./permissions");
 
 const configure = (expressApp) => {
@@ -24,17 +28,6 @@ const configure = (expressApp) => {
       res.status(StatusCodes.OK).send({ posts: posts });
     }
   });
-  expressApp.post(
-    "/datasource/:datasourceId/post",
-    authorizationMiddleware([
-      block("viewer"),
-      allow("admin"),
-      allow("author").onCondition(isCreatorOfDataset),
-    ]),
-    async (req, res) => {
-      res.status(StatusCodes.OK).send({ message: "ok" });
-    }
-  );
   expressApp.get(
     "/datasource/:datasourceId/posts/:postId",
     async (req, res) => {
