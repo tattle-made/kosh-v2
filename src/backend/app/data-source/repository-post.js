@@ -36,4 +36,19 @@ const createPost = async (posts) => {
   }
 }
 
-module.exports = { getPostById, createPost };
+const updatePostIndexStatus = async (indexHistory) => {
+  try {
+    return await post.update({
+      index_status: indexHistory.status
+    }, {
+      where: {
+        id: indexHistory.post_id
+      }
+    });
+  } catch (err) {
+    console.log("Error : Could not update Post status");
+    throw err;
+  }
+}
+
+module.exports = { getPostById, createPost, updatePostIndexStatus };

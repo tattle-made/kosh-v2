@@ -14,8 +14,6 @@ const accessToken = process.env.ACCESS_TOKEN
 const METADATA_COLLECTION = "kosh_metadata"
 const FACTCHECK_DB = "kosh_metadata"
 
-cron.schedule('* * * * *', indexPosts);
-
 const indexPosts = async () => {
     let posts;
     try {
@@ -63,3 +61,5 @@ const indexPosts = async () => {
     })
     process.exit(0)
 }
+
+cron.schedule('* * * * *', indexPosts);
