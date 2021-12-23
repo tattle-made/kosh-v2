@@ -14,7 +14,7 @@ const configure = (expressApp) => {
         }
         try {
             await PostIndexHistory.create(indexHistory)
-            updatePostIndexStatus(indexHistory)
+            await updatePostIndexStatus(indexHistory)
         } catch (err) {
             console.log("Error : Could not create Index History");
             throw err;
