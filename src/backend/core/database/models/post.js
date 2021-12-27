@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       post.hasMany(models.postIndexHistory, {as: 'postIndexHistory'})
+      post.belongsTo(models.datasource, {foreignKey: 'datasource', as: 'dataset'})
     }
   }
   post.init(
