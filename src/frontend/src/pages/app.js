@@ -12,6 +12,8 @@ import {
 import Layout from "../layouts";
 import { Router } from "@reach/router";
 import Tokens from "../components/pages/tokens";
+import DatasourceIndex from "../components/pages/index/datasource";
+import PostsIndex from "../components/pages/index/posts";
 
 /**
  * @author
@@ -40,6 +42,14 @@ const App = ({ location }) => {
         <PrivateRoute
           component={Tokens}
           path={"/tokens"}
+        />
+        <PrivateRoute
+          component={DatasourceIndex}
+          path={"/index/datasource"}
+        />
+        <PrivateRoute
+          component={PostsIndex}
+          path={"/index/:datasourceName"}
         />
         <DisabledForLoggedInUser component={Login} path={"/login"} />
         <DisabledForLoggedInUser component={SignUp} path={"/sign-up"} />
