@@ -1,40 +1,72 @@
-import { Box, Heading, List, Text } from "grommet";
+import { Box, Button, CheckBox, Heading, Image, List, Text, Video } from "grommet";
 import React, { useEffect } from "react";
-import { get } from "../../../service/backend";
+import { get, patch, post, postWithToken } from "../../../service/backend";
 import { ContentSection } from "../../atoms/section";
 
 const PostsIndex = ({ location }) => {
-  const [indexStatus, setIndexStatus] = React.useState([]);
-
-  const posts = [
-    {id: 'asdf', status: 'failed', image: ''},
-    {id: 'asdf1234', status: 'failed', image: ''},
-    {id: 'asdf12345678', status: 'failed', image: ''}
-  ]
-
+  const [posts, setPosts] = React.useState([]);
+  const [failedStatus, setFailedStatus] = React.useState(false);
+  const [blacklistedStatus, setBlacklistedStatus] = React.useState(false);
+  const [filteredPosts, setFilteredPosts] = React.useState([]);
+  const datasourceId = location.state.id
+  
   useEffect(() => {
     postIndexStatus()
   }, [])
 
+  useEffect(() => {
+    filterPosts()
+  }, [failedStatus, blacklistedStatus])
+
   const postIndexStatus = () => {
-    const datasourceId = location.state.id
     get(`/index/datasource/${datasourceId}/post`).then((response) => {
-      setIndexStatus(response.data)
+      response.data.forEach((post) => post.checked = false)
+      setPosts(response.data)
+      setFilteredPosts(response.data)
     }).catch((error) => {
       console.log(error)
     })
   }
 
+  const filterPosts = () => {
+    const filter = []
+    if (failedStatus) filter.push('failed')
+    if (blacklistedStatus) filter.push('blacklisted')
+    if (!filter.length) return setFilteredPosts(posts)
+    return setFilteredPosts(posts.filter((post) => filter.includes(post.index_status)))
+  }
+
+  const retryIndex = () => {
+    const postIds = filteredPosts.filter((post) => post.checked).map((post) => post.id)
+    postWithToken(`/index/datasource/${datasourceId}/post`, {postIds}).then((response) => {
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  const blacklistIndex = () => {
+    const postIds = filteredPosts.filter((post) => post.checked).map((post) => post.id)
+    patch(`/index/datasource/${datasourceId}/post/blacklist`, {postIds}).then((response) => {
+      postIndexStatus()
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  const selectPost = (index) => {
+    const post = filteredPosts[index];
+    post.checked = !post.checked
+    setFilteredPosts([...filteredPosts])
+  }
+
   const Preview = ({ type, src, preview }) => {
     return (
       <Box
-        width={"medium"}
-        height={"medium"}
         border={{ color: type == "error" ? "status-error" : "border" }}
         round={"small"}
         pad={"small"}
       >
-        {/* {type == "image" ? (
+        {type == "image" ? (
           <Image fit="contain" src={src} />
         ) : type == "video" ? (
           <Video controls="over" fit="contain">
@@ -48,43 +80,78 @@ const PostsIndex = ({ location }) => {
               default
             />
           </Video>
-        ) : type == "text" ? ( */}
-          <Box pad={"small"} overflow={"hidden"}>
-            <Text size={"small"}>{preview}...</Text>
+        ) : type == "text" ? (
+          <Box width={"small"} height={"xsmall"} overflow={"hidden"}>
+            <Text size={"xsmall"}>{preview}...</Text>
           </Box>
-        {/* ) : null} */}
+        ) : null}
       </Box>
     );
   };
 
-  const ListItem = (post) => {
-    return <Box direction={"column"} margin={{ top: "medium" }} gap={"medium"}>
-      <Box gap={"medium"}>
-        <Preview
-          type={post.type}
-          src={post.media_url}
-          preview={post.preview}
-        />
+  const ListItem = (post, i) => {
+    return <Box direction={"row"} margin={{ top: "medium" }} gap={"small"} hoverIndicator={true}>
+      <CheckBox
+        checked={post.checked}
+        onChange={() => selectPost(i)}
+      />
+      <Preview
+        type={post.type}
+        src={post.media_url}
+        preview={post.preview}
+      />
+      <Box pad={"small"} overflow={"hidden"}>
+        <Text wordBreak={"break-all"} size={"small"}>{post.id}</Text>
+        <Box margin={{top: "medium"}} pad="small" background="visuals-1" style={{width: "fit-content", textTransform: "capitalize"}}>
+          {post.index_status}
+        </Box>
       </Box>
-    <pre>{JSON.stringify(post.metadata, undefined, 2)}</pre>
-  </Box>
+    </Box>
   }
 
   return (
     <ContentSection>
-      <Heading size="small" margin="none">Index</Heading>
-      {!indexStatus.length ? <Text size="small" margin="small" color={"dark-3"}>Looks like you haven't gotten started yet!</Text> :
-        <List
-          pad="small"
-          margin={{
-            top: "small"
-          }}
-          primaryKey="name"
-          secondaryKey="percent"
-          border={false}
-          data={posts}
-          children={(item) => ListItem(item)}
-        />
+      {/* <Heading size="small" margin="none">Index / {location}</Heading> */}
+      {!posts.length ? <Text size="small" margin="small" color={"dark-3"}>No Posts Found!</Text> :
+        <>
+          <Box direction="row" gap="small" justify="evenly">
+            <Button
+                active={true}
+                label="Retry"
+                color={'neutral-2'}
+                margin={"small"}
+                style={{border: "1px solid #e0e0e0"}}
+                onClick={retryIndex}
+                size="small"
+                fill="horizontal"
+              ></Button>
+              <Button
+                active={true}
+                label="Blacklist"
+                color={'brand'}
+                margin={"small"}
+                hoverIndicator
+                fill="horizontal"
+                style={{border: "1px solid #e0e0e0"}}
+                onClick={blacklistIndex}
+                size="small" />
+          </Box>
+          <Box margin="medium" direction="row" gap="small">
+            <Text size="small" weight="bold">Filter: </Text>
+            <CheckBox checked={failedStatus}
+              label={"Failed"}
+              onChange={() => setFailedStatus(!failedStatus)}/>
+            <CheckBox checked={blacklistedStatus}
+              label={"Blacklisted"}
+              onChange={() => setBlacklistedStatus(!blacklistedStatus)}/>
+          </Box>
+          <List
+            pad="small"
+            border={false}
+            data={filteredPosts}
+            children={(item, i) => ListItem({...item}, i)}
+          />
+        </>
       }
     </ContentSection>
   );

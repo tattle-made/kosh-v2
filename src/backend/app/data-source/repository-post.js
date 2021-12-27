@@ -88,6 +88,7 @@ const postIndexStatus = async (datasourceId) => {
         where: {
           datasource: datasourceId
         },
+        limit: 100
     })
     return data
   } catch (err) {
@@ -96,15 +97,17 @@ const postIndexStatus = async (datasourceId) => {
   }
 }
 
-const blacklistPostIndex = async (datasourceId) => {
+const blacklistPostIndex = async (datasourceId, customQuery) => {
+  let query = {
+    datasource: datasourceId,
+    index_status: { [Op.notIn]: ["enqueued", "indexed"]}
+  }
+  if (customQuery) query = {...query, ...customQuery}
   try {
     return await post.update({
       index_status: 'blacklisted'
     }, {
-      where: {
-        datasource: datasourceId,
-        index_status: { [Op.notIn]: ["enqueued", "indexed"]}
-      }
+      where: query
     });
   } catch (err) {
     console.log("Error : Could not blacklist Post status");
@@ -112,12 +115,12 @@ const blacklistPostIndex = async (datasourceId) => {
   }
 }
 
-const indexPosts = async (accessToken, datasourceId) => {
+const indexPosts = async (accessToken, query) => {
   const condition = [
     { index_status: null },
     { index_status: { [Op.notIn]: ["enqueued", "indexed"] } }
   ]
-  if (datasourceId) condition.push({datasource: datasourceId})
+  if (query) condition.push(query)
   let posts;
   try {
       posts = await post.findAll({

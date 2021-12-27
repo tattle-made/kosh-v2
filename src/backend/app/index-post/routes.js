@@ -2,6 +2,7 @@ const db = require("../../core/database/models");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 const { updatePostIndexStatus, datasourceIndexStatus, postIndexStatus, blacklistPostIndex, indexPosts } = require("../data-source/repository-post");
+const { Sequelize } = require("../../core/database/models");
 
 const PostIndexHistory = db.sequelize.models.postIndexHistory;
 
@@ -53,7 +54,8 @@ const configure = (expressApp) => {
     expressApp.post("/index/datasource/:datasourceId", async (req, res) => {
         try {
             const accessToken = jwt.sign(req.user, process.env.ACCESS_TOKEN_SECRET)
-            const post = await indexPosts(accessToken, req.params.datasourceId)
+            const query = {datasource: req.params.datasourceId}
+            const post = await indexPosts(accessToken, query)
             res.status(StatusCodes.OK).send(post);
         } catch (err) {
             console.log(err);
@@ -84,6 +86,35 @@ const configure = (expressApp) => {
             res
                 .status(StatusCodes.INTERNAL_SERVER_ERROR)
                 .send({ error: "Could not get post index" });
+        }
+    });
+
+    expressApp.post("/index/datasource/:datasourceId/post", async (req, res) => {
+        try {
+            if (!req.body.postIds || !req.body.postIds.length) throw "Ids missing"
+            const query = {id: {[Sequelize.Op.in]: req.body.postIds}}
+            const accessToken = jwt.sign(req.user, process.env.ACCESS_TOKEN_SECRET)
+            const post = await indexPosts(accessToken, query)
+            res.status(StatusCodes.OK).send(post);
+        } catch (err) {
+            console.log(err);
+            res
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .send({ error: "Could not get post index" });
+        }
+    });
+
+    expressApp.patch("/index/datasource/:datasourceId/post/blacklist", async (req, res) => {
+        try {
+            if (!req.body.postIds || !req.body.postIds.length) throw "Ids missing"
+            const query = {id: {[Sequelize.Op.in]: req.body.postIds}}
+            const post = await blacklistPostIndex(req.params.datasourceId, query)
+            res.status(StatusCodes.OK).send(post);
+        } catch (err) {
+            console.log(err);
+            res
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .send({ error: "Could not blacklist index" });
         }
     });
 }

@@ -21,7 +21,7 @@ const DatasourceIndex = () => {
   }
 
   const indexDatasource = (datasourceId) => {
-    postWithToken(`/index/datasource/${datasourceId}/post`).then((response) => {
+    postWithToken(`/index/datasource/${datasourceId}`).then((response) => {
       // setIndexStatus(response.data)
     }).catch((error) => {
       console.log(error)
