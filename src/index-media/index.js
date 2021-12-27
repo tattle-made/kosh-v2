@@ -28,10 +28,10 @@ const indexPosts = async () => {
     } catch (e) {
         console.log(e)
     }
-    const postObject = {}
+    const postsToIndex = {}
     const indexHistory = []
     posts.forEach((post) => {
-        postObject[post.id] = { 
+        postsToIndex[post.id] = { 
             post: {
                 id: post.id,
                 media_type: post.type,
@@ -48,15 +48,15 @@ const indexPosts = async () => {
     const postsMetadata = await get(
         FACTCHECK_DB,
         METADATA_COLLECTION,
-        { e_kosh_id: { $in: Object.keys(postObject) } },
+        { e_kosh_id: { $in: Object.keys(postsToIndex) } },
         { limit: 0, skip: 0}
     )
     for await (const post of postsMetadata) {
-        if (!post.e_kosh_id || !Object.keys(postObject).includes(post.e_kosh_id)) continue
-        postObject[post.e_kosh_id]["metadata"] = {...post}
+        if (!post.e_kosh_id || !Object.keys(postsToIndex).includes(post.e_kosh_id)) continue
+        postsToIndex[post.e_kosh_id]["metadata"] = {...post}
     }
     await PostIndexHistory.bulkCreate(indexHistory)
-    await axios.post(process.env.API_URL + "/index", Object.values(postObject), {
+    await axios.post(process.env.API_URL + "/index", Object.values(postsToIndex), {
         headers: { Authorization: "Bearer " + accessToken },
     })
     process.exit(0)
