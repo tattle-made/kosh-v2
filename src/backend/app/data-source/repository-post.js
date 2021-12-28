@@ -1,9 +1,9 @@
 const { Op } = require("sequelize");
 const { Sequelize } = require("../../core/database/models");
 const db = require("../../core/database/models");
-const {post, datasource, postIndexHistory: PostIndexHistory} = db.sequelize.models;
+const { post, datasource, postIndexHistory: PostIndexHistory } = db.sequelize.models;
 const { getOne, get } = require("../../core/mongo");
-const axios= require('axios');
+const axios = require('axios');
 
 const getPostById = async (datasourceId, postId) => {
   try {
@@ -32,21 +32,19 @@ const getPostById = async (datasourceId, postId) => {
 
 const createPost = async (posts) => {
   try {
-    return await post.bulkCreate(posts, {returning: true});
+    return await post.bulkCreate(posts, { returning: true });
   } catch (err) {
     console.log("Error : Could not create Post");
     throw err;
   }
 }
 
-const updatePostIndexStatus = async (indexHistory) => {
+const updatePostIndexStatus = async (status, condition) => {
   try {
     return await post.update({
-      index_status: indexHistory.status
+      index_status: status
     }, {
-      where: {
-        id: indexHistory.post_id
-      }
+      where: condition
     });
   } catch (err) {
     console.log("Error : Could not update Post status");
@@ -57,10 +55,10 @@ const updatePostIndexStatus = async (indexHistory) => {
 const datasourceIndexStatus = async () => {
   try {
     const data = await post.findAll({
-        group: ['datasource', 'index_status'],
-        attributes: ['datasource', 'index_status', [Sequelize.fn('COUNT', 'index_status'), 'count']],
-        raw: true,
-        include: [{ model: datasource, as: 'dataset' }]
+      group: ['datasource', 'index_status'],
+      attributes: ['datasource', 'index_status', [Sequelize.fn('COUNT', 'index_status'), 'count']],
+      raw: true,
+      include: [{ model: datasource, as: 'dataset' }]
     })
     const responseStructure = {
       datasourceName: "",
@@ -70,7 +68,7 @@ const datasourceIndexStatus = async () => {
     }
     const result = {}
     data.forEach((post) => {
-      if (!result[post.datasource]) result[post.datasource] = {...responseStructure}
+      if (!result[post.datasource]) result[post.datasource] = { ...responseStructure }
       result[post.datasource].id = post.datasource
       result[post.datasource].datasourceName = post["dataset.name"]
       result[post.datasource][post.index_status] = post.count
@@ -85,10 +83,10 @@ const datasourceIndexStatus = async () => {
 const postIndexStatus = async (datasourceId) => {
   try {
     const data = await post.findAll({
-        where: {
-          datasource: datasourceId
-        },
-        limit: 100
+      where: {
+        datasource: datasourceId
+      },
+      limit: 100
     })
     return data
   } catch (err) {
@@ -98,16 +96,19 @@ const postIndexStatus = async (datasourceId) => {
 }
 
 const blacklistPostIndex = async (datasourceId, customQuery) => {
-  let query = {
-    datasource: datasourceId,
-    index_status: { [Op.notIn]: ["enqueued", "indexed"]}
-  }
-  if (customQuery) query = {...query, ...customQuery}
+  const query = [
+    { datasource: datasourceId },
+    { [Op.or]: [
+      { index_status: null },
+      { index_status: { [Op.notIn]: ["enqueued", "indexed"] }}
+    ]}
+  ]
+  if (customQuery) query.push(customQuery)
   try {
     return await post.update({
       index_status: 'blacklisted'
     }, {
-      where: query
+      where: {[Op.and]: query}
     });
   } catch (err) {
     console.log("Error : Could not blacklist Post status");
@@ -120,33 +121,35 @@ const indexPosts = async (accessToken, query) => {
     { index_status: null },
     { index_status: { [Op.notIn]: ["enqueued", "indexed", "blacklisted"] } }
   ]
-  if (query) condition.push(query)
   let posts;
   try {
-      posts = await post.findAll({
-          where: {
-              [Op.or]: condition,
-          },
-      });
+    posts = await post.findAll({
+      where: {
+        [Op.and]: [
+          query,
+          {[Op.or]: condition}
+        ]
+      },
+    });
   } catch (e) {
-      console.log(e)
-      throw e;
+    console.log(e)
+    throw e;
   }
   const postsToIndex = {}
   const indexHistory = []
   posts.forEach((post) => {
-      postsToIndex[post.id] = { 
-          post: {
-              id: post.id,
-              media_type: post.type,
-              media_url: post.media_url
-          },
-          config: { mode: "store" }
-      }
-      indexHistory.push({
-          post_id: post.id,
-          status: "enqueued"
-      })
+    postsToIndex[post.id] = {
+      post: {
+        id: post.id,
+        media_type: post.type,
+        media_url: post.media_url
+      },
+      config: { mode: "store" }
+    }
+    indexHistory.push({
+      post_id: post.id,
+      status: "enqueued"
+    })
   })
   const FACTCHECK_DB = "kosh_metadata"
   const METADATA_COLLECTION = "kosh_metadata"
@@ -157,14 +160,23 @@ const indexPosts = async (accessToken, query) => {
     { limit: 0, skip: 0 }
   )
   for await (const postMetadata of postsMetadata) {
-      postsToIndex[postMetadata.e_kosh_id]["metadata"] = {...postMetadata}
+    postsToIndex[postMetadata.e_kosh_id]["metadata"] = { ...postMetadata }
   }
-  await PostIndexHistory.bulkCreate(indexHistory)
-  await axios.post(process.env.INDEX_API_URL + "/index", Object.values(postsToIndex), {
+  try {
+    await PostIndexHistory.bulkCreate(indexHistory)
+    const condition = { id: { [Op.in]: Object.keys(postsToIndex) } }
+    await updatePostIndexStatus("enqueued", condition)
+    await axios.post(process.env.INDEX_API_URL + "/index", Object.values(postsToIndex), {
       headers: { Authorization: "Bearer " + accessToken },
-  })
+    })
+  } catch (e) {
+    console.log(e)
+    throw e;
+  }
 }
 
-module.exports = { getPostById, createPost, updatePostIndexStatus,
-   datasourceIndexStatus, blacklistPostIndex, indexPosts, postIndexStatus };
+module.exports = {
+  getPostById, createPost, updatePostIndexStatus,
+  datasourceIndexStatus, blacklistPostIndex, indexPosts, postIndexStatus
+};
 

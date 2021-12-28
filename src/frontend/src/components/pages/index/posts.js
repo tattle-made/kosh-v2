@@ -104,9 +104,11 @@ const PostsIndex = ({ location }) => {
       />
       <Box pad={"small"} overflow={"hidden"}>
         <Text wordBreak={"break-all"} size={"small"}>{post.id}</Text>
-        <Box margin={{top: "medium"}} pad="small" background="visuals-1" style={{width: "fit-content", textTransform: "capitalize"}}>
-          {post.index_status}
-        </Box>
+        {post.index_status ? (
+          <Box margin={{top: "medium"}} pad="small" background="visuals-1" style={{width: "fit-content", textTransform: "capitalize"}}>
+            {post.index_status}
+          </Box>
+        ) : (null)}
       </Box>
     </Box>
   }

@@ -2,7 +2,7 @@ const db = require("../../core/database/models");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 const { updatePostIndexStatus, datasourceIndexStatus, postIndexStatus, blacklistPostIndex, indexPosts } = require("../data-source/repository-post");
-const { Sequelize } = require("../../core/database/models");
+const { Op } = require("sequelize");
 
 const PostIndexHistory = db.sequelize.models.postIndexHistory;
 
@@ -16,7 +16,8 @@ const configure = (expressApp) => {
         }
         try {
             await PostIndexHistory.create(indexHistory)
-            await updatePostIndexStatus(indexHistory)
+            const condition = { id: indexHistory.post_id }
+            await updatePostIndexStatus(indexHistory.status, condition)
         } catch (err) {
             console.log("Error : Could not create Index History");
             throw err;
@@ -79,7 +80,7 @@ const configure = (expressApp) => {
     expressApp.post("/index/datasource/:datasourceId/post", async (req, res) => {
         try {
             if (!req.body.postIds || !req.body.postIds.length) throw "Ids missing"
-            const query = {id: {[Sequelize.Op.in]: req.body.postIds}}
+            const query = {id: {[Op.in]: req.body.postIds}}
             const accessToken = jwt.sign(req.user, process.env.ACCESS_TOKEN_SECRET)
             const post = await indexPosts(accessToken, query)
             res.status(StatusCodes.OK).send(post);
@@ -94,7 +95,7 @@ const configure = (expressApp) => {
     expressApp.patch("/index/datasource/:datasourceId/post/blacklist", async (req, res) => {
         try {
             if (!req.body.postIds || !req.body.postIds.length) throw "Ids missing"
-            const query = {id: {[Sequelize.Op.in]: req.body.postIds}}
+            const query = {id: {[Op.in]: req.body.postIds}}
             const post = await blacklistPostIndex(req.params.datasourceId, query)
             res.status(StatusCodes.OK).send(post);
         } catch (err) {

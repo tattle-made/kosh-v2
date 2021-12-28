@@ -57,6 +57,9 @@ const indexPosts = async () => {
         postsToIndex[post.e_kosh_id]["metadata"] = {...post}
     }
     await PostIndexHistory.bulkCreate(indexHistory)
+    await Post.update({ index_status: "enqueued" }, {
+        where: { id: { [Op.in]: Object.keys(postsToIndex) } }
+    })
     const batchSize = 100;
     for (let i = 0, j = Object.values(postsToIndex).length; i < j; i += batchSize) {
         const batch = Object.values(postsToIndex).slice(i, i + batchSize);
