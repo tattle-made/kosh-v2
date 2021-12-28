@@ -45,7 +45,7 @@ const App = ({ location }) => {
         />
         <PrivateRoute
           component={DatasourceIndex}
-          path={"/index/datasource"}
+          path={"/index"}
         />
         <PrivateRoute
           component={PostsIndex}

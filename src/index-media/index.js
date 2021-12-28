@@ -21,12 +21,13 @@ const indexPosts = async () => {
             where: {
                 [Op.or]: [
                     { index_status: null },
-                    { index_status: { [Op.notIn]: ["enqueued", "indexed"] } }
+                    { index_status: { [Op.notIn]: ["enqueued", "indexed", "blacklisted"] } }
                 ],
             },
         });
     } catch (e) {
         console.log(e)
+        return
     }
     const postsToIndex = {}
     const indexHistory = []
@@ -56,9 +57,13 @@ const indexPosts = async () => {
         postsToIndex[post.e_kosh_id]["metadata"] = {...post}
     }
     await PostIndexHistory.bulkCreate(indexHistory)
-    await axios.post(process.env.API_URL + "/index", Object.values(postsToIndex), {
-        headers: { Authorization: "Bearer " + accessToken },
-    })
+    const batchSize = 100;
+    for (let i = 0, j = Object.values(postsToIndex).length; i < j; i += batchSize) {
+        const batch = Object.values(postsToIndex).slice(i, i + batchSize);
+        await axios.post(process.env.API_URL + "/index", batch, {
+            headers: { Authorization: "Bearer " + accessToken },
+        })
+    }
     process.exit(0)
 }
 

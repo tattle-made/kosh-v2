@@ -26,19 +26,6 @@ const configure = (expressApp) => {
             .send({});
     });
 
-    expressApp.post("/index", async (req, res) => {
-        try {
-            const accessToken = jwt.sign(req.user, process.env.ACCESS_TOKEN_SECRET)
-            const post = await indexPosts(accessToken);
-            res.status(StatusCodes.OK).send(post);
-        } catch (err) {
-            console.log(err);
-            res
-                .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                .send({ error: "Could not index" });
-        }
-    });
-
     expressApp.get("/index/datasource", async (_req, res) => {
         try {
             const post = await datasourceIndexStatus()

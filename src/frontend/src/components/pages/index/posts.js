@@ -67,7 +67,9 @@ const PostsIndex = ({ location }) => {
         pad={"small"}
       >
         {type == "image" ? (
-          <Image fit="contain" src={src} />
+          <Box width={"small"} height={"xsmall"}>
+            <Image fit="contain" src={src}/>
+          </Box>
         ) : type == "video" ? (
           <Video controls="over" fit="contain">
             <source key="video" src={src} type="video/mp4" />

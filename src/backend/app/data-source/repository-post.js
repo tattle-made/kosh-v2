@@ -70,7 +70,7 @@ const datasourceIndexStatus = async () => {
     }
     const result = {}
     data.forEach((post) => {
-      if (!result[post.datasource]) result[post.datasource] = responseStructure
+      if (!result[post.datasource]) result[post.datasource] = {...responseStructure}
       result[post.datasource].id = post.datasource
       result[post.datasource].datasourceName = post["dataset.name"]
       result[post.datasource][post.index_status] = post.count
@@ -118,7 +118,7 @@ const blacklistPostIndex = async (datasourceId, customQuery) => {
 const indexPosts = async (accessToken, query) => {
   const condition = [
     { index_status: null },
-    { index_status: { [Op.notIn]: ["enqueued", "indexed"] } }
+    { index_status: { [Op.notIn]: ["enqueued", "indexed", "blacklisted"] } }
   ]
   if (query) condition.push(query)
   let posts;
@@ -148,8 +148,8 @@ const indexPosts = async (accessToken, query) => {
           status: "enqueued"
       })
   })
-  const METADATA_COLLECTION = "kosh_metadata"
   const FACTCHECK_DB = "kosh_metadata"
+  const METADATA_COLLECTION = "kosh_metadata"
   const postsMetadata = await get(
     FACTCHECK_DB,
     METADATA_COLLECTION,
@@ -157,7 +157,6 @@ const indexPosts = async (accessToken, query) => {
     { limit: 0, skip: 0 }
   )
   for await (const postMetadata of postsMetadata) {
-      if (!postMetadata.e_kosh_id || !Object.keys(postsToIndex).includes(postMetadata.e_kosh_id)) continue
       postsToIndex[postMetadata.e_kosh_id]["metadata"] = {...postMetadata}
   }
   await PostIndexHistory.bulkCreate(indexHistory)
