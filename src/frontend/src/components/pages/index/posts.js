@@ -68,7 +68,7 @@ const PostsIndex = ({ location }) => {
       >
         {type == "image" ? (
           <Box width={"small"} height={"xsmall"}>
-            <Image fit="contain" src={src}/>
+            <Image alt="Post Image" fit="contain" src={src}/>
           </Box>
         ) : type == "video" ? (
           <Video controls="over" fit="contain">
@@ -94,6 +94,7 @@ const PostsIndex = ({ location }) => {
   const ListItem = (post, i) => {
     return <Box direction={"row"} margin={{ top: "medium" }} gap={"small"} hoverIndicator={true}>
       <CheckBox
+        a11yTitle="Select Post"
         checked={post.checked}
         onChange={() => selectPost(i)}
       />
