@@ -7,7 +7,7 @@ const Logo = ({ data, theme }) => {
   const scale = data && data.scale ? data.scale : 1;
 
   const LogoSVG = () => (
-    <PlainLink to={"/"}>
+    <PlainLink to={"/app/datasource"}>
       <svg
         width={`${150 * scale}`}
         height={`${49 * scale}`}
