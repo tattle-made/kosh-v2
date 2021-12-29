@@ -4,7 +4,7 @@ require("dotenv").config({
 });
 const { default: axios } = require('axios');
 const cron = require('node-cron');
-const { Op } = require("sequelize");// const axios = require("axios");
+const { Op } = require("sequelize");
 const db = require("../backend/core/database/models");
 const { get, connect } = require('../backend/core/mongo');
 const Post = db.sequelize.models.post;
@@ -21,7 +21,7 @@ const indexPosts = async () => {
             where: {
                 [Op.or]: [
                     { index_status: null },
-                    { index_status: { [Op.notIn]: ["enqueued", "indexed", "blacklisted"] } }
+                    { index_status: { [Op.notIn]: ["indexed", "blacklisted"] } }
                 ],
             },
         });
@@ -70,4 +70,5 @@ const indexPosts = async () => {
     process.exit(0)
 }
 
-cron.schedule('* * * * *', indexPosts);
+indexPosts()
+// cron.schedule('* * * * *', indexPosts);
