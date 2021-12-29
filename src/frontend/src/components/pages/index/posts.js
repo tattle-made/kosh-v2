@@ -38,7 +38,8 @@ const PostsIndex = ({ location }) => {
 
   const retryIndex = () => {
     const postIds = filteredPosts.filter((post) => post.checked).map((post) => post.id)
-    postWithToken(`/index/datasource/${datasourceId}/post`, {postIds}).then((response) => {
+    postWithToken(`/index/datasource/${datasourceId}/post`, {postIds}).then(() => {
+      postIndexStatus()
     }).catch((error) => {
       console.log(error)
     })
@@ -46,7 +47,7 @@ const PostsIndex = ({ location }) => {
 
   const blacklistIndex = () => {
     const postIds = filteredPosts.filter((post) => post.checked).map((post) => post.id)
-    patch(`/index/datasource/${datasourceId}/post/blacklist`, {postIds}).then((response) => {
+    patch(`/index/datasource/${datasourceId}/post/blacklist`, {postIds}).then(() => {
       postIndexStatus()
     }).catch((error) => {
       console.log(error)
