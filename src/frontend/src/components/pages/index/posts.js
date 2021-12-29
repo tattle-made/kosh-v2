@@ -66,27 +66,25 @@ const PostsIndex = ({ location }) => {
         round={"small"}
         pad={"small"}
       >
-        {type == "image" ? (
-          <Box width={"small"} height={"xsmall"}>
-            <Image alt="Post Image" fit="contain" src={src}/>
-          </Box>
-        ) : type == "video" ? (
-          <Video controls="over" fit="contain">
-            <source key="video" src={src} type="video/mp4" />
-            <track
-              key="cc"
-              label="English"
-              kind="subtitles"
-              srcLang="en"
-              src="/assets/small-en.vtt"
-              default
-            />
-          </Video>
-        ) : type == "text" ? (
-          <Box width={"small"} height={"xsmall"} overflow={"hidden"}>
-            <Text size={"xsmall"}>{preview}...</Text>
-          </Box>
-        ) : null}
+        <Box width={"medium"} height={"xsmall"} overflow={"hidden"}>
+          {type == "image" ? (
+              <Image alt="Post Image" fit="contain" src={src}/>
+          ) : type == "video" ? (
+              <Video controls="over" fit="contain" >
+                <source key="video" src={src} type="video/mp4" />
+                <track
+                  key="cc"
+                  label="English"
+                  kind="subtitles"
+                  srcLang="en"
+                  src="/assets/small-en.vtt"
+                  default
+                />
+              </Video>
+          ) : type == "text" ? (
+              <Text size={"xsmall"}>{preview}...</Text>
+          ) : null}
+        </Box>
       </Box>
     );
   };
@@ -103,11 +101,11 @@ const PostsIndex = ({ location }) => {
         src={post.media_url}
         preview={post.preview}
       />
-      <Box pad={"small"} overflow={"hidden"}>
-        <Text wordBreak={"break-all"} size={"small"}>{post.id}</Text>
+      <Box pad={"small"} overflow={"hidden"} width={"medium"}>
+        <Text wordBreak={"break-all"} size={"xsmall"}>{post.id}</Text>
         {post.index_status ? (
           <Box margin={{top: "medium"}} pad="small" background="visuals-1" style={{width: "fit-content", textTransform: "capitalize"}}>
-            {post.index_status}
+            <Text size={"small"}>{post.index_status}</Text>
           </Box>
         ) : (null)}
       </Box>
