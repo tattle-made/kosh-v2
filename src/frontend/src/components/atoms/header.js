@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { Box, Text, Button } from "grommet";
+import { Box, Text, Menu } from "grommet";
 import Logo from "./logo";
 import { PlainLink } from "./links";
 import { navigate } from "gatsby";
 import { isLoggedIn, logout } from "../../service/user-authentication";
 import { ContentSection } from "./section";
 import { SearchInput } from "./search-input";
+import { Menu as MenuIcon } from "react-feather";
 
 const UserProfileInNavigation = ({ location }) => {
   const onLogoutClicked = () => {
@@ -14,14 +15,16 @@ const UserProfileInNavigation = ({ location }) => {
   };
 
   return isLoggedIn() ? (
-    <Box direction={"row"} gap={"medium"} align={"center"}>
-      <PlainLink to={"/app/tokens"}>
-        <Text size={"small"}>Tokens</Text>
-      </PlainLink>
-      <Button plain onClick={onLogoutClicked}>
-        <Text size={"small"}>Logout</Text>
-      </Button>
-    </Box>
+    <Menu
+      icon={<MenuIcon size={22} color={"#514E80AA"} style={{verticalAlign: "middle"}}/>}
+      dropAlign={{ right: "right", top: "bottom" }}
+      items={[
+        { label: ' Index', onClick: () => navigate('/app/index') },
+        { label: 'Tokens', onClick: () => navigate('/app/tokens') },
+        { label: 'Logout', onClick: onLogoutClicked },
+      ]}
+      size="medium"
+    />
   ) : (
     <Box direction={"row"} gap={"medium"} align={"center"}>
       <PlainLink to={"/app/login"}>

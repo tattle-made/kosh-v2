@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      datasource.hasMany(models.post, {as: 'post', foreignKey: 'datasource'})
     }
   }
   datasource.init(

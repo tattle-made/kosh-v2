@@ -26,6 +26,9 @@ module.exports = {
       preview: {
         type: Sequelize.STRING,
       },
+      index_status: {
+        type: Sequelize.ENUM('enqueued', 'processing', 'indexed', 'failed', 'blacklisted')
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
