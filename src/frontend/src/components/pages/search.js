@@ -31,7 +31,7 @@ const SearchPost = () => {
             {showFilter ? <SearchSettings setSelectedTypes={setSelectedTypes}
              setSelectedDatasource={setSelectedDatasource} datasources={datasources}
              fromDate={fromDate} setFromDate={setFromDate}
-             toDate={toDate} setToDate={setToDate} /> : (
+             toDate={toDate} setToDate={setToDate} setShowFilter={setShowFilter}/> : (
                 <Box pad={"small"} direction="row">
                     <Box justify="center" align="center" width={"xxsmall"}>
                         <Dropzone onDrop={onDrop}>
