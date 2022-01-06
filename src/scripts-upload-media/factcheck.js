@@ -40,7 +40,7 @@ const insertPosts = async () => {
             if (post.mediaType === "text" && !post.s3URL) {
                 const fileId = uuid();
                 const { uploadData } = require("./s3");
-                await uploadData(post.content, fileId);
+                await uploadData(JSON.stringify(post.content, "utf-8"), fileId);
                 post.s3URL = "https://fs.tattle.co.in/service/kosh/file/" + fileId
             }
             posts.push({
