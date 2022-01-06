@@ -19,7 +19,8 @@ const UserProfileInNavigation = ({ location }) => {
       icon={<MenuIcon size={22} color={"#514E80AA"} style={{verticalAlign: "middle"}}/>}
       dropAlign={{ right: "right", top: "bottom" }}
       items={[
-        { label: ' Index', onClick: () => navigate('/app/index') },
+        { label: 'Search', onClick: () => navigate('/app/search') },
+        { label: 'Index', onClick: () => navigate('/app/index') },
         { label: 'Tokens', onClick: () => navigate('/app/tokens') },
         { label: 'Logout', onClick: onLogoutClicked },
       ]}
