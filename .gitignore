@@ -9,6 +9,7 @@ build/
 
 src/backend/scripts/checkmate/media_items
 
+reis-data/
 
 # VSCODE extension related files
 .favorites.json
