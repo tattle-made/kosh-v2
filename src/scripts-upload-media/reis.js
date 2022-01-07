@@ -15,6 +15,7 @@ const accessToken = process.env.ACCESS_TOKEN;
 const datasource = "05320f24-dd83-45b9-83b5-5be6f4458241";
 const failedRequestsFile = "reis-failed-requests.json";
 const reisDatasetFolder = './reis-data';
+const delimiter = '	'
 
 async function readLines(basePath) {
     const fileStream = fs.createReadStream(basePath + "_anonymized.txt");
@@ -28,7 +29,7 @@ async function readLines(basePath) {
     });
     const posts = []
     for await (const line of rl) {
-        const columns = line.split('	')
+        const columns = line.split(delimiter)
         if (columns[0] === "group_id") continue
         const fileId = uuid();
         const imageFileName = columns[3]
