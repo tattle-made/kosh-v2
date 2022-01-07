@@ -165,14 +165,14 @@ const indexPosts = async (accessToken, query) => {
     postsToIndex[postMetadata.e_kosh_id]["metadata"] = { ...postMetadata }
   }
   try {
-    await PostIndexHistory.bulkCreate(indexHistory)
-    const condition = { id: { [Op.in]: Object.keys(postsToIndex) } }
-    await updatePostIndexStatus("enqueued", condition)
     for (const post of Object.values(postsToIndex)) {
       await axios.post(process.env.INDEX_API_URL + "/index", post, {
         headers: { Authorization: "Bearer " + accessToken, "Content-type": "application/json" },
       })
     }
+    await PostIndexHistory.bulkCreate(indexHistory)
+    const condition = { id: { [Op.in]: Object.keys(postsToIndex) } }
+    await updatePostIndexStatus("enqueued", condition)
   } catch (e) {
     console.log(e)
     throw e;
