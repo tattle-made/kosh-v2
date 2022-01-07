@@ -11,13 +11,13 @@ const s3client = new AWS.S3({
 });
 
 const uploadData = async (data, fileName) => {
-  console.log("uploading data", bucketName);
+  // console.log("uploading data", bucketName);
   return new Promise((resolve) => {
     s3client.upload(
       {
         Bucket: bucketName,
         Key: fileName,
-        Body: JSON.stringify(data, "utf-8"),
+        Body: data,
       },
       (err, response) => {
         if (err) throw err;

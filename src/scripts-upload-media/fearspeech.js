@@ -19,7 +19,7 @@ const insertPost = async () => {
     for (const post of Object.values(stories)) {
         const fileId = uuid();
         const { uploadData } = require("./s3");
-        await uploadData(post.message_text, fileId);
+        await uploadData(JSON.stringify(post.message_text, "utf-8"), fileId);
         post.s3URL = "https://fs.tattle.co.in/service/kosh/file/" + fileId
         posts.push({
             id: uuid(),
@@ -76,7 +76,8 @@ async function insertMetaData(batch) {
             insertOne: {
                 e_kosh_id: post.id,
                 annotation_list: post.annotation_list,
-                propagation: post.propagation
+                propagation: post.propagation,
+                translated_text: post.translated_text
             }
         }
     })
