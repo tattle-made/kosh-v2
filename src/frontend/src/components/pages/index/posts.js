@@ -1,6 +1,7 @@
-import { Box, Button, CheckBox, Heading, Image, List, Text, Video } from "grommet";
+import { Box, Button, CheckBox, List, Text } from "grommet";
 import React, { useEffect } from "react";
-import { get, patch, post, postWithToken } from "../../../service/backend";
+import { get, patch, postWithToken } from "../../../service/backend";
+import Preview from "../../atoms/post-preview";
 import { ContentSection } from "../../atoms/section";
 
 const PostsIndex = ({ location }) => {
@@ -59,36 +60,6 @@ const PostsIndex = ({ location }) => {
     post.checked = !post.checked
     setFilteredPosts([...filteredPosts])
   }
-
-  const Preview = ({ type, src, preview }) => {
-    return (
-      <Box
-        border={{ color: type == "error" ? "status-error" : "border" }}
-        round={"small"}
-        pad={"small"}
-      >
-        <Box width={"medium"} height={"xsmall"} overflow={"hidden"}>
-          {type == "image" ? (
-              <Image alt="Post Image" fit="contain" src={src}/>
-          ) : type == "video" ? (
-              <Video controls="over" fit="contain" >
-                <source key="video" src={src} type="video/mp4" />
-                <track
-                  key="cc"
-                  label="English"
-                  kind="subtitles"
-                  srcLang="en"
-                  src="/assets/small-en.vtt"
-                  default
-                />
-              </Video>
-          ) : type == "text" ? (
-              <Text size={"xsmall"}>{preview}...</Text>
-          ) : null}
-        </Box>
-      </Box>
-    );
-  };
 
   const ListItem = (post, i) => {
     return <Box direction={"row"} margin={{ top: "medium" }} gap={"small"} hoverIndicator={true}>

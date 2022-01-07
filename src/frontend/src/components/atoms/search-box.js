@@ -1,36 +1,46 @@
-import { Box, Keyboard, Select, TextInput } from "grommet";
+import { Box, Keyboard, TextInput } from "grommet";
 import React from "react";
 
 const SearchBox = (props) => {
-    const [options, setOptions] = React.useState(["HEllo", "Hel", "Hell", "Hey", "asdf", "What", "the", "Fuck", "ussi" ]);
-    const [filteredOptions, setFilteredOptions] = React.useState(["HEllo", "Hel", "Hell", "Hey", "asdf", "What", "the", "Fuck", "ussi" ]);
-    const [textInput, showTextInput] = React.useState(false)
+    const [filteredOptions, setFilteredOptions] = React.useState(["asd","sad"]);
 
-    return <Keyboard onEnter={() => { }}>
-        {textInput ? <Box>
-            <TextInput height={"small"} style={{paddingLeft: 60, alignItems: "center", display: "flex"}} icon={<span style={{fontSize: 15}}>query</span>} />
-        </Box> : <Select
+    const getSuggestions = (text) => {
+        // post('/suggest', {text}).then((response) => setFilteredOptions(response.suggestions))
+        // .catch((res) => console.log(res))
+    }
+    let debounce;
+
+    return <Box fill={true}>
+        <Keyboard onEnter={() => props.search()}>
+        <TextInput
             placeholder="Search"
+            height={"small"}
             value={props.searchString}
+            style={props.queryInput ? {paddingLeft: 60, alignItems: "center", display: "flex"} : {}}
             onChange={(event) => {
-                console.log(event)
-                props.setSearchString(event.option)
+                if (event.target.value === "query:") {
+                    props.showQueryInput(true)
+                    props.setSearchString('')
+                    return
+                }
+                props.setSearchString(event.target.value)
+                clearTimeout(debounce)
+                debounce = setTimeout(() => {
+                    getSuggestions(event.target.value)
+                }, 1000)
             }}
-            onSearch={(e) => {
-                if (e === "query:") showTextInput(true)
-                setFilteredOptions(options.filter((option) => option.includes(e))
-            )}}
-            dropAlign={{top: "top", left: "left"}}
+            icon={props.queryInput && <span style={{fontSize: 15}}>query</span>} 
+            dropAlign={{ top: "bottom" }}
+            suggestions={filteredOptions}
             dropHeight="medium"
             size={"small"}
             onSuggestionSelect={(s) => {
                 console.log(s)
                 props.setSearchString(s.suggestion)
             }}
-            options={filteredOptions}
         />
-        }
-    </Keyboard>
+        </Keyboard>
+    </Box>
 }
 
 export default SearchBox
