@@ -36,9 +36,11 @@ const indexPosts = async () => {
             post: {
                 id: post.id,
                 media_type: post.type,
-                media_url: post.media_url
+                media_url: post.media_url,
+                datasource_id: post.datasource,
+                client_id: "tattle"
             },
-            config: { mode: "store" }
+            config: { mode: "enqueue", version: "0.1" }
         }
         indexHistory.push({
             post_id: post.id,
