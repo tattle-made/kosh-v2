@@ -72,8 +72,20 @@ const getPostFromDatasourceByType = async (datasource, type, pageNum) => {
   }
 };
 
+const getDatasources = async () => {
+  try {
+    console.log("fetching from db");
+    const datasets = await datasource.findAll({});
+    return datasets;
+  } catch (err) {
+    console.log("Error : Could not get Datasets");
+    throw err;
+  }
+};
+
 module.exports = {
   getPostFromDatasource,
   getPostFromDatasourceByType,
   getDatasourceById,
+  getDatasources
 };

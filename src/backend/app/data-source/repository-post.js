@@ -142,9 +142,11 @@ const indexPosts = async (accessToken, query) => {
       post: {
         id: post.id,
         media_type: post.type,
-        media_url: post.media_url
+        media_url: post.media_url,
+        datasource_id: post.datasource,
+        client_id: "tattle"
       },
-      config: { mode: "store" }
+      config: { mode: "enqueue", version: "0.1" }
     }
     indexHistory.push({
       post_id: post.id,
@@ -166,17 +168,35 @@ const indexPosts = async (accessToken, query) => {
     await PostIndexHistory.bulkCreate(indexHistory)
     const condition = { id: { [Op.in]: Object.keys(postsToIndex) } }
     await updatePostIndexStatus("enqueued", condition)
-    await axios.post(process.env.INDEX_API_URL + "/index", Object.values(postsToIndex), {
-      headers: { Authorization: "Bearer " + accessToken },
-    })
+    for (const post of Object.values(postsToIndex)) {
+      await axios.post(process.env.INDEX_API_URL + "/index", post, {
+        headers: { Authorization: "Bearer " + accessToken, "Content-type": "application/json" },
+      })
+    }
   } catch (e) {
     console.log(e)
     throw e;
   }
 }
 
+const getPosts = async (postIds) => {
+  try {
+    console.log(postIds)
+    const posts = await post.findAll({
+      where: {
+        id: {[Op.in]: postIds},
+      },
+    });
+    return posts;
+  } catch (err) {
+    console.log("Error : Could not get Posts", err);
+    throw err;
+  }
+};
+
 module.exports = {
   getPostById, createPost, updatePostIndexStatus,
-  datasourceIndexStatus, blacklistPostIndex, indexPosts, postIndexStatus
+  datasourceIndexStatus, blacklistPostIndex, indexPosts, postIndexStatus,
+  getPosts
 };
 
