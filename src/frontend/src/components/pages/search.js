@@ -73,38 +73,38 @@ const SearchPost = () => {
                 selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes}
                 fromDate={fromDate} setFromDate={setFromDate}
                 toDate={toDate} setToDate={setToDate} setShowFilter={setShowFilter} 
-                /> : (
-                <Box pad={"small"} direction="row">
-                    <Box justify="center" align="center" width={"xxsmall"}>
-                        <Dropzone onDrop={onDrop}>
-                            {({ getRootProps, getInputProps }) => {
-                                return (
-                                    <Box {...getRootProps()} >
-                                        <input {...getInputProps()} />
-                                        <Upload color={grayColor} />
-                                    </Box>
-                                )
-                            }}
-                        </Dropzone>
-                    </Box>
-                    {searchFile ? (
-                        <Box width={"medium"} pad={"small"} direction="row" justify="between" border="all" align="center" round="small">
-                            {searchFile.name}
-                            <Button onClick={() => setSearchFile(null)}>
-                                <X color={"#514E80AA"} size={26} />
-                            </Button>
-                        </Box>
-                    ) : <SearchBox setSearchString={setSearchString} searchString={searchString} search={searchWithText} queryInput={queryInput} showQueryInput={showQueryInput}/>}
-                    <Box pad={"small"} justify={"center"} round={"xsmall"} focusIndicator={false} onClick={() => setShowFilter(true)}>
-                        <Filter color={"#514E80AA"} size={22} />
-                    </Box>
+            /> : <>
+            <Box pad={"small"} direction="row">
+                <Box justify="center" align="center" width={"xxsmall"}>
+                    <Dropzone onDrop={onDrop}>
+                        {({ getRootProps, getInputProps }) => {
+                            return (
+                                <Box {...getRootProps()} >
+                                    <input {...getInputProps()} />
+                                    <Upload color={grayColor} />
+                                </Box>
+                            )
+                        }}
+                    </Dropzone>
                 </Box>
-            )}
+                {searchFile ? (
+                    <Box width={"medium"} pad={"small"} direction="row" justify="between" border="all" align="center" round="small">
+                        {searchFile.name}
+                        <Button onClick={() => setSearchFile(null)}>
+                            <X color={"#514E80AA"} size={26} />
+                        </Button>
+                    </Box>
+                ) : <SearchBox setSearchString={setSearchString} searchString={searchString} search={searchWithText} queryInput={queryInput} showQueryInput={showQueryInput}/>}
+                <Box pad={"small"} justify={"center"} round={"xsmall"} focusIndicator={false} onClick={() => setShowFilter(true)}>
+                    <Filter color={"#514E80AA"} size={22} />
+                </Box>
+            </Box>
             <Box direction="row" gap="small" pad={"small"} wrap={true}>
                 {posts.map((post) => (
                     <Preview type={post.type} src={post.media_url} preview={post.preview} />
                 ))}
             </Box>
+            </>}
         </>
     )
 }
