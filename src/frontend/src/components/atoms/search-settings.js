@@ -21,13 +21,13 @@ const SearchSettings = (props) => {
                 <Text size={"small"} weight={600}>
                     Type
                 </Text>
-                <CheckBoxGroup options={ACCEPTED_POST_TYPES} style={{textTransform: "capitalize"}} onChange={(e) => props.setSelectedTypes(e.value)} />
+                <CheckBoxGroup value={props.selectedTypes} options={ACCEPTED_POST_TYPES} style={{textTransform: "capitalize"}} onChange={(e) => props.setSelectedTypes(e.value)} />
             </Box>
             <Box gap={"medium"}>
                 <Text size={"small"} weight={600}>
                     Datasource
                 </Text>
-                <CheckBoxGroup options={props.datasources} style={{textTransform: "capitalize"}} onChange={(e) => props.setSelectedDatasource(e.value)} />
+                <CheckBoxGroup value={props.selectedDatasource} labelKey="name" valueKey="id" options={props.datasources} style={{textTransform: "capitalize"}} onChange={(e) => props.setSelectedDatasource(e.value)} />
             </Box>
             <Box gap={"medium"}>
                 <Text size={"small"} weight={600}>
