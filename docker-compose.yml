@@ -1,19 +1,9 @@
 version: "3"
 
 services:
-  # redis:
-  #   image: "redis"
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - "~/data/kosh/redis:/data"
-  # redis_ui:
-  #   image: "marian/rebrow"
-  #   ports:
-  #     - "5001:5001"
-  #   restart: always
   db:
     image: "mysql"
+    container_name: sql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -25,15 +15,33 @@ services:
       - 3306:3306
     volumes:
       - "~/data/kosh/db:/var/lib/mysql"
+    networks:
+      - tattle
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - "~/data/kosh/mongo:/data/db"
+    networks:
+      - tattle
+
   db_gui:
     image: adminer
+    container_name: sql_ui
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - tattle
+
   backend:
     build:
       context: ./src/backend
       target: debug
+    container_name: kosh_api
     restart: always
     command: tail -f /dev/null
     ports:
@@ -43,27 +51,9 @@ services:
       - "./src/backend:/app"
     env_file:
       - ./src/backend/development.env
-  mongo:
-    image: mongo
-    container_name: mongo
-    ports:
-      - 27017:27017
-    volumes:
-      - "~/data/kosh/mongo:/data/db"
+    networks:
+      - tattle
 
-  # localstack:
-  #   image: localstack/localstack-full
-  #   container_name: localstack
-  #   ports:
-  #     - "4563-4599:4563-4599"
-  #     - "8055:8080"
-  #   environment:
-  #     - SERVICES=s3
-  #     - DEBUG=1
-  #     - DATA_DIR=/tmp/localstack/data ~/data/kosh/
-  #   volumes:
-  #     - "~/data/kosh/s3:/tmp/localstack"
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-
-volumes:
-  node_modules:
+networks:
+  tattle:
+    driver: bridge
