@@ -79,12 +79,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
       - name: Install Packages
-        run: npm install --legacy-peer-deps
+        run: |
+          pwd
+          cd src/frontend 
+          npm install --legacy-peer-deps
 
       - name: Build Site
-        run: cd src/frontend && npm run build
+        run: |
+          pwd
+          npm run build
       - name: Deploy Site
-        run: npm run deploy
+        run: |
+          pwd
+          npm run deploy
 
       - name: Notify on Slack
         uses: rtCamp/action-slack-notify@v2.0.0

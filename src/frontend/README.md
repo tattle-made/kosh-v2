@@ -5,4 +5,4 @@
     npm run develop
     ```
 
-  
+  v 0.0.1
