@@ -7,8 +7,13 @@ build/
 
 .DS_Store
 
+# data folders in scripts
 src/backend/scripts/checkmate/media_items
-
+src/scripts-upload-media/reis-data
+src/scripts-upload-media/fear_speech_data.json
+src/scripts-upload-media/fear-speech-failed-requests.json
 
 # VSCODE extension related files
 .favorites.json
+
+

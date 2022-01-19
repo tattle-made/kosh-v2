@@ -16,6 +16,10 @@ const postWithToken = async (endpoint, payload) => {
   return await axios.post(`${API_URL}${endpoint}`, payload, headers());
 };
 
+const patch = async (endpoint, payload) => {
+  return await axios.patch(`${API_URL}${endpoint}`, payload, headers());
+};
+
 const deleteApi = async (endpoint) => {
   return await axios.delete(`${API_URL}${endpoint}`, headers());
 };
@@ -29,4 +33,4 @@ const headers = () => {
   }
 }
 
-export { get, post, postWithToken, API_URL, deleteApi };
+export { get, post, postWithToken, API_URL, deleteApi, patch };

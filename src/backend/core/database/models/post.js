@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      post.hasMany(models.postIndexHistory, {as: 'postIndexHistory'})
+      post.belongsTo(models.datasource, {foreignKey: 'datasource', as: 'dataset'})
     }
   }
   post.init(
@@ -22,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       published_at: DataTypes.DATE,
       media_url: DataTypes.STRING,
       preview: DataTypes.STRING,
+      index_status: DataTypes.ENUM('enqueued', 'processing', 'indexed', 'failed', 'blacklisted'),
       creator: DataTypes.UUID,
       datasource: DataTypes.UUID,
     },

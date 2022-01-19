@@ -1,0 +1,211 @@
+[
+    {
+        "post": {
+            "id": "02c04a1a-5198-41ef-b1c6-33a895b4e55e",
+            "media_type": "image",
+            "media_url": "ERR"
+        },
+        "config": {
+            "mode": "store"
+        },
+        "metadata": {
+            "_id": "61ca93eae510811a36ebec36",
+            "e_kosh_id": "02c04a1a-5198-41ef-b1c6-33a895b4e55e",
+            "postURL": "https://www.boomlive.in/fast-check/2018-photos-of-rats-destroying-notes-in-an-atm-revived-8642",
+            "domain": "boomlive.in",
+            "headline": "2018 Photos Of Rats Destroying Notes In An ATM Revived",
+            "date_updated": "June 25, 2020"
+        }
+    },
+    {
+        "post": {
+            "id": "06a7823d-46a7-4c00-a865-6914534a7b7d",
+            "media_type": "text",
+            "media_url": "https://fs.tattle.co.in/service/kosh/file/399a98ed-b3d9-4dfd-b82f-d6fb1a7351a1"
+        },
+        "config": {
+            "mode": "store"
+        },
+        "metadata": {
+            "_id": "61cae20e2aa6952d0703b094",
+            "e_kosh_id": "06a7823d-46a7-4c00-a865-6914534a7b7d",
+            "annotation_list": [
+                "Fear speech",
+                "Fear speech",
+                "Normal"
+            ],
+            "propagation": [
+                {
+                    "group_id": 9087,
+                    "user_id": 229869,
+                    "timestamp": 1538130086000
+                },
+                {
+                    "group_id": 7,
+                    "user_id": 215,
+                    "timestamp": 1550186113000
+                }
+            ]
+        }
+    },
+    {
+        "post": {
+            "id": "0a9c10c6-b2eb-4e4a-b03b-e768a95fab5e",
+            "media_type": "text",
+            "media_url": "https://fs.tattle.co.in/service/kosh/file/21cfa895-4123-4617-80b7-721ca2d8b78b"
+        },
+        "config": {
+            "mode": "store"
+        },
+        "metadata": {
+            "_id": "61cae508b307012d49362001",
+            "e_kosh_id": "0a9c10c6-b2eb-4e4a-b03b-e768a95fab5e",
+            "annotation_list": [
+                "Normal",
+                "Normal",
+                "Normal"
+            ],
+            "propagation": [
+                {
+                    "group_id": 9356,
+                    "user_id": 235164,
+                    "timestamp": 1542701483000
+                },
+                {
+                    "group_id": 3980,
+                    "user_id": 9439,
+                    "timestamp": 1550858456000
+                },
+                {
+                    "group_id": 7,
+                    "user_id": 2573,
+                    "timestamp": 1550920586000
+                },
+                {
+                    "group_id": 4033,
+                    "user_id": 103288,
+                    "timestamp": 1550988514000
+                },
+                {
+                    "group_id": 5922,
+                    "user_id": 147752,
+                    "timestamp": 1550990272000
+                },
+                {
+                    "group_id": 7428,
+                    "user_id": 191280,
+                    "timestamp": 1555069217000
+                },
+                {
+                    "group_id": 4188,
+                    "user_id": 119896,
+                    "timestamp": 1557058984000
+                },
+                {
+                    "group_id": 4188,
+                    "user_id": 119896,
+                    "timestamp": 1557213525000
+                },
+                {
+                    "group_id": 4057,
+                    "user_id": 119909,
+                    "timestamp": 1557213811000
+                },
+                {
+                    "group_id": 4037,
+                    "user_id": 119909,
+                    "timestamp": 1557213842000
+                }
+            ]
+        }
+    },
+    {
+        "post": {
+            "id": "0e299f0e-7aee-45f5-b422-00d9a2a3c60b",
+            "media_type": "image",
+            "media_url": "ERR"
+        },
+        "config": {
+            "mode": "store"
+        },
+        "metadata": {
+            "_id": "61ca93eae510811a36ebec3b",
+            "e_kosh_id": "0e299f0e-7aee-45f5-b422-00d9a2a3c60b",
+            "postURL": "https://bangla.boomlive.in/fast-check/morphed-image-of-mamata-banerjee-with-cash-revived-with-misleading-claims-9902",
+            "domain": "bangla.boomlive.in",
+            "headline": "বিভ্রান্তিকর ভাবে ছড়াল টাকা সহ মমতা বন্দ্যোপাধ্যায়ের সম্পাদিত ছবি",
+            "date_updated": "September 25, 2020"
+        }
+    },
+    {
+        "post": {
+            "id": "526851c1-c84d-41c6-b1d0-659b13a9dfcc",
+            "media_type": "text",
+            "media_url": "https://fs.tattle.co.in/service/kosh/file/ac847278-4f38-42b7-9491-96f4ac924072"
+        },
+        "config": {
+            "mode": "store"
+        },
+        "metadata": {
+            "_id": "61c947c23e3c692bd4b6d0cc",
+            "e_kosh_id": "526851c1-c84d-41c6-b1d0-659b13a9dfcc",
+            "annotation_list": [
+                "Normal",
+                "Normal",
+                "Normal"
+            ],
+            "propagation": [
+                {
+                    "group_id": 9356,
+                    "user_id": 235164,
+                    "timestamp": 1542701483000
+                },
+                {
+                    "group_id": 3980,
+                    "user_id": 9439,
+                    "timestamp": 1550858456000
+                },
+                {
+                    "group_id": 7,
+                    "user_id": 2573,
+                    "timestamp": 1550920586000
+                },
+                {
+                    "group_id": 4033,
+                    "user_id": 103288,
+                    "timestamp": 1550988514000
+                },
+                {
+                    "group_id": 5922,
+                    "user_id": 147752,
+                    "timestamp": 1550990272000
+                },
+                {
+                    "group_id": 7428,
+                    "user_id": 191280,
+                    "timestamp": 1555069217000
+                },
+                {
+                    "group_id": 4188,
+                    "user_id": 119896,
+                    "timestamp": 1557058984000
+                },
+                {
+                    "group_id": 4188,
+                    "user_id": 119896,
+                    "timestamp": 1557213525000
+                },
+                {
+                    "group_id": 4057,
+                    "user_id": 119909,
+                    "timestamp": 1557213811000
+                },
+                {
+                    "group_id": 4037,
+                    "user_id": 119909,
+                    "timestamp": 1557213842000
+                }
+            ]
+        }
+    }
+]

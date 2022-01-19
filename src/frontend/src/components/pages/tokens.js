@@ -9,7 +9,7 @@ import {
   List,
   Text,
 } from "grommet";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { ContentSection } from "../atoms/section";
 import { Copy, Trash2 } from "react-feather";
 import { deleteApi, get, postWithToken } from "../../service/backend";
@@ -116,11 +116,8 @@ const Tokens = () => {
   );
 
   return (
-    <ContentSection>
-      <Heading size="small" margin="none">
-        Tokens
-      </Heading>
-
+    <Box width={"large"} pad={"small"}>
+      {/* <Heading size="small" margin="none">Tokens</Heading> */}
       {!tokens.length ? (
         <Text size="small" margin="small" color={"dark-3"}>
           Looks like you haven't gotten started yet!
@@ -138,18 +135,18 @@ const Tokens = () => {
           children={(item) => ListItem(item)}
         />
       )}
-      <Button
-        fill="horizontal"
-        primary
-        color={"brand"}
-        size="medium"
-        active={true}
-        plain={false}
-        label="Add"
-        onClick={addToken}
-      />
+      <Box width={"small"} pad={"small"}>
+        <Button
+          fill={"false"}
+          primary
+          active={true}
+          plain={false}
+          label="Add"
+          onClick={addToken}
+        />
+      </Box>
       {show && confirmationAlert()}
-    </ContentSection>
+    </Box>
   );
 };
 

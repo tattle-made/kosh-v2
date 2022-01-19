@@ -83,7 +83,7 @@ const DataSources = ({ location }) => {
             </Box> */}
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/d1067dd0-83cd-11eb-8eb1-9d22f3b98bd1"}
+                to={"/app/datasource/883176d5-77c5-11ec-957f-0242ac160005"}
               >
                 <Box
                   width={"100%"}
@@ -103,22 +103,24 @@ const DataSources = ({ location }) => {
                     level={4}
                     margin={{ bottom: "4.578px", top: "7.324px" }}
                   >
-                    CheckMate: Prioritizing User Generated Content for Fact
-                    Checking
+                    Whatsapp Election Memes
                   </Heading>
                   <Paragraph size={"small"} margin={{ top: "none" }}>
-                    Dataset of 2200 posts from ShareChat, with annotations by
-                    Tattle team of claims contained in them
+                    A Dataset of Fact-Checked Images Shared on WhatsApp during
+                    the Brazilian and Indian Elections
                   </Paragraph>
-                  <a href="https://arxiv.org/abs/2010.13387" taget="_blank">
-                    Arxiv Link
+                  <a
+                    href="https://zenodo.org/record/3779157#.YeYdEfvhVhE"
+                    taget="_blank"
+                  >
+                    Zenodo Link
                   </a>
                 </Box>
               </PlainLink>
             </Box>
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/d1078f40-83cd-11eb-8eb1-9d22f3b98bd1"}
+                to={"/app/datasource/8a46cda5-717a-47d7-bbc2-1e239e89cef8"}
               >
                 <Box
                   width={"100%"}

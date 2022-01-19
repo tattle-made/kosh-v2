@@ -2,15 +2,9 @@ const { StatusCodes } = require("http-status-codes");
 const {
   getPostFromDatasource,
   getPostFromDatasourceByType,
+  getDatasources,
 } = require("./repository-datasource");
-const { getPostById, createPost } = require("./repository-post");
-const {
-  middleware: authorizationMiddleware,
-  allow,
-  block,
-} = require("../../core/http/middleware-authorization");
-
-const { isCreatorOfDataset } = require("./permissions");
+const { getPostById, createPost, getPosts } = require("./repository-post");
 
 const configure = (expressApp) => {
   expressApp.get("/datasource/:datasourceId/posts", async (req, res) => {
@@ -59,6 +53,34 @@ const configure = (expressApp) => {
         .send({ error: "Could not return post" });
     }
   });
+
+  expressApp.get("/datasource", async (req, res) => {
+    try {
+      const datasources = await getDatasources()
+      res.status(StatusCodes.OK).send(datasources);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send({ error: "Could not get datasources" });
+    }
+  })
+
+  expressApp.post(
+    "/posts",
+    async (req, res) => {
+      const { postIds } = req.body;
+      try {
+        const post = await getPosts(postIds);
+        res.status(StatusCodes.OK).send(post);
+      } catch (err) {
+        console.log(err);
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .send({ error: "Could not return post" });
+      }
+    }
+  );
 };
 
 module.exports = { configure };
