@@ -37,12 +37,11 @@ const authorization = {
     return async function (req, res, next) {
       for (let i = 0; i < instructions.length; i++) {
         const { user } = req;
+        let requestShouldProceed = false;
+
         const applicableInstructionsArray = instructions.filter(
           (instruction) => instruction.role === user.role
         );
-        let requestShouldProceed = false;
-
-        console.log(applicableInstructionsArray);
 
         if (applicableInstructionsArray.length === 0) {
           next();
