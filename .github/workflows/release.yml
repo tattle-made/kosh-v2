@@ -18,7 +18,7 @@ jobs:
         with:
           filters: |
             backend:
-                - 'backend/**/*'
+                - 'src/backend/**/*'
 
   backend:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           name: tattletech/kosh-server
           tags: ${{ steps.vars.outputs.sha_short }}
-          workdir: backend/
+          workdir: src/backend/
 
       # - name: Deploy to k8s
       #   uses: appleboy/ssh-action@master
