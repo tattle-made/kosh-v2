@@ -16,13 +16,20 @@ const UserProfileInNavigation = ({ location }) => {
 
   return isLoggedIn() ? (
     <Menu
-      icon={<MenuIcon size={22} color={"#514E80AA"} style={{verticalAlign: "middle"}}/>}
+      icon={
+        <MenuIcon
+          size={22}
+          color={"#514E80AA"}
+          style={{ verticalAlign: "middle" }}
+        />
+      }
       dropAlign={{ right: "right", top: "bottom" }}
       items={[
-        { label: 'Search', onClick: () => navigate('/app/search') },
-        { label: 'Index', onClick: () => navigate('/app/index') },
-        { label: 'Tokens', onClick: () => navigate('/app/tokens') },
-        { label: 'Logout', onClick: onLogoutClicked },
+        { label: "Datasets", onClick: () => navigate("/app/datasource") },
+        { label: "Search", onClick: () => navigate("/app/search") },
+        { label: "Index", onClick: () => navigate("/app/index") },
+        { label: "Tokens", onClick: () => navigate("/app/tokens") },
+        { label: "Logout", onClick: onLogoutClicked },
       ]}
       size="medium"
     />
@@ -55,7 +62,7 @@ const Header = ({ location }) => {
         <Box flex={"grow"}></Box>
         {/* <Text>{user.id}</Text> */}
         <Box gap={"large"} direction={"row"}>
-          <SearchInput />
+          {/* <SearchInput /> */}
           <UserProfileInNavigation location={location} />
         </Box>
       </Box>

@@ -1,7 +1,12 @@
 import { Box, Image, Text, Video } from "grommet";
 import React from "react";
+import { navigate } from "gatsby";
 
-const Preview = ({ type, src, preview }) => {
+const Preview = ({ type, src, preview, id, datasource }) => {
+  const previewClicked = (e) => {
+    console.log({ id, datasource });
+    navigate(`/app/datasource/${datasource}/${id}`);
+  };
   return (
     <Box
       border={{ color: type == "error" ? "status-error" : "border" }}
@@ -10,12 +15,13 @@ const Preview = ({ type, src, preview }) => {
       round={"small"}
       pad={"small"}
       margin={"small"}
+      onClick={previewClicked}
     >
       <Box height={"xsmall"} overflow={"hidden"} fill={true}>
         {type == "image" ? (
           <Image alt="Post Image" fit="contain" src={src} />
         ) : type == "video" ? (
-          <Video controls="over" fit="contain" >
+          <Video controls="over" fit="contain">
             <source key="video" src={src} type="video/mp4" />
             <track
               key="cc"
@@ -34,4 +40,4 @@ const Preview = ({ type, src, preview }) => {
   );
 };
 
-export default Preview
+export default Preview;
