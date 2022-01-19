@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Box, Text, Menu } from "grommet";
+import React, { useEffect, useRef, useState } from "react";
+import { Box, Text, Menu, Drop, Button } from "grommet";
 import Logo from "./logo";
 import { PlainLink } from "./links";
 import { navigate } from "gatsby";
@@ -7,32 +7,91 @@ import { isLoggedIn, logout } from "../../service/user-authentication";
 import { ContentSection } from "./section";
 import { SearchInput } from "./search-input";
 import { Menu as MenuIcon } from "react-feather";
+import { Admin, AdminOrAuthor } from "./guard";
 
 const UserProfileInNavigation = ({ location }) => {
+  const menuRef = useRef();
+  const [menuToggle, setMenuToggle] = useState(false);
   const onLogoutClicked = () => {
+    console.log("here");
     logout();
     navigate("/");
   };
 
+  function toggleMenu() {
+    setMenuToggle(!menuToggle);
+    console.log(menuToggle);
+  }
+
   return isLoggedIn() ? (
-    <Menu
-      icon={
+    // <Menu
+    //   icon={
+    //     <MenuIcon
+    //       size={22}
+    //       color={"#514E80AA"}
+    //       style={{ verticalAlign: "middle" }}
+    //     />
+    //   }
+    //   dropAlign={{ right: "right", top: "bottom" }}
+    //   items={[
+    //     { label: "Datasets", onClick: () => navigate("/app/datasource") },
+    //     { label: "Search", onClick: () => navigate("/app/search") },
+    //     { label: "Index", onClick: () => navigate("/app/index") },
+    //     { label: "Tokens", onClick: () => navigate("/app/tokens") },
+    //     { label: "Logout", onClick: onLogoutClicked },
+    //   ]}
+    //   size="medium"
+    // ></Menu>
+    <Box>
+      <Box onClick={toggleMenu} focusIndicator={false}>
         <MenuIcon
           size={22}
           color={"#514E80AA"}
           style={{ verticalAlign: "middle" }}
+          ref={menuRef}
         />
-      }
-      dropAlign={{ right: "right", top: "bottom" }}
-      items={[
-        { label: "Datasets", onClick: () => navigate("/app/datasource") },
-        { label: "Search", onClick: () => navigate("/app/search") },
-        { label: "Index", onClick: () => navigate("/app/index") },
-        { label: "Tokens", onClick: () => navigate("/app/tokens") },
-        { label: "Logout", onClick: onLogoutClicked },
-      ]}
-      size="medium"
-    />
+      </Box>
+      {menuToggle && (
+        <Drop
+          align={{ top: "bottom", right: "right" }}
+          target={menuRef.current}
+        >
+          <Box pad="small" gap={"small"}>
+            <Button
+              focusIndicator={false}
+              onClick={() => navigate("/app/datasource")}
+            >
+              Datasets
+            </Button>
+            <Button
+              focusIndicator={false}
+              onClick={() => navigate("/app/search")}
+            >
+              Search
+            </Button>
+            <Admin>
+              <Button
+                focusIndicator={false}
+                onClick={() => navigate("/app/index")}
+              >
+                Index
+              </Button>
+            </Admin>
+            <AdminOrAuthor>
+              <Button
+                focusIndicator={false}
+                onClick={() => navigate("/app/tokens")}
+              >
+                Tokens
+              </Button>
+            </AdminOrAuthor>
+            <Button focusIndicator={false} onClick={onLogoutClicked}>
+              Logout
+            </Button>
+          </Box>
+        </Drop>
+      )}
+    </Box>
   ) : (
     <Box direction={"row"} gap={"medium"} align={"center"}>
       <PlainLink to={"/app/login"}>
