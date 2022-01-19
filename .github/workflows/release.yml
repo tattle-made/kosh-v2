@@ -8,7 +8,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      server: ${{ steps.filter.outputs.server }}
+      backend: ${{ steps.filter.backend.server }}
     steps:
       - uses: actions/checkout@v2
         with:
