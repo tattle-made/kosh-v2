@@ -7,26 +7,21 @@ const time_of_run = new Date();
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const hashedPassword = await bcrypt.hash("Abcdef123$", 10);
-    console.log(hashedPassword);
+    const password_admin = generatePassword();
+    const password_author = generatePassword();
+    const password_reader = generatePassword();
+    console.log({ password_admin, password_author, password_reader });
+    const hashedPasswordAdmin = await bcrypt.hash(password_admin, 10);
+    const hashedPasswordAuthor = await bcrypt.hash(password_author, 10);
+    const hashedPasswordReader = await bcrypt.hash(password_reader, 10);
+    // console.log(hashedPassword);
     const users = await queryInterface.bulkInsert("users", [
       {
         id: uuidv4(),
         username: "admin",
         email: "admin@tattle.co.in",
-        password: hashedPassword,
+        password: hashedPasswordAdmin,
         role: "admin",
-        status: "verified",
-        verificationToken: null,
-        createdAt: time_of_run,
-        updatedAt: time_of_run,
-      },
-      {
-        id: uuidv4(),
-        username: "demo",
-        email: "demo@tattle.co.in",
-        password: hashedPassword,
-        role: "author",
         status: "verified",
         verificationToken: null,
         createdAt: time_of_run,
@@ -36,7 +31,18 @@ module.exports = {
         id: uuidv4(),
         username: "author",
         email: "author@tattle.co.in",
-        password: hashedPassword,
+        password: hashedPasswordAuthor,
+        role: "author",
+        status: "verified",
+        verificationToken: null,
+        createdAt: time_of_run,
+        updatedAt: time_of_run,
+      },
+      {
+        id: uuidv4(),
+        username: "reader",
+        email: "reader@tattle.co.in",
+        password: hashedPasswordReader,
         role: "reader",
         status: "verified",
         verificationToken: null,
@@ -46,7 +52,7 @@ module.exports = {
     ]);
 
     const doubleUserIds = await queryInterface.sequelize.query(
-      `SELECT id from users where email='demo@tattle.co.in';`
+      `SELECT id from users where email='author@tattle.co.in';`
     );
     const demoUser = doubleUserIds[0][0];
     console.log(demoUser);
@@ -54,7 +60,7 @@ module.exports = {
     const datasources = await queryInterface.bulkInsert("datasources", [
       {
         id: uuidv4(),
-        name: "checkmate",
+        name: "Fact Check Article Media",
         description:
           "A novel dataset that can be used to prioritize check-worthy posts from multi-media content in Hindi.",
         creator: demoUser.id,
@@ -65,7 +71,7 @@ module.exports = {
       {
         id: uuidv4(),
 
-        name: "fearspeech",
+        name: "Fear Speech",
         description:
           "Collection of whatsapp messages collected during 2019 Indian General Elections",
         creator: demoUser.id,
@@ -75,7 +81,7 @@ module.exports = {
       },
       {
         id: uuidv4(),
-        name: "factcheck",
+        name: "Election memes from Whatsapp",
         description:
           "Tattle's database of media items scraped from IFCN certified Indian fact checkers",
         creator: demoUser.id,
