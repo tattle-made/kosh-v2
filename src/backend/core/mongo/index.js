@@ -65,7 +65,7 @@ const getOne = async (dbName, collectionName, condition) => {
     const result = await client
       .db(dbName)
       .collection(collectionName)
-      .findOne({}, condition);
+      .findOne(condition);
 
     return result;
   } catch (err) {
@@ -116,4 +116,13 @@ const bulkWrite = async (dbName, collectionName, operations) => {
   }
 };
 
-module.exports = { connect, store, update, get, getOne, get2, count, bulkWrite };
+module.exports = {
+  connect,
+  store,
+  update,
+  get,
+  getOne,
+  get2,
+  count,
+  bulkWrite,
+};

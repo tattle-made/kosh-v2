@@ -11,7 +11,7 @@ const { bulkWrite, connect } = require("../backend/core/mongo");
 const FACTCHECK_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
 const accessToken = process.env.ACCESS_TOKEN;
-const datasource = "8a46cda5-717a-47d7-bbc2-1e239e89cef8";
+const datasource = "883176d5-77c5-11ec-957f-0242ac160005";
 const failedRequestsFile = "fear-speech-failed-requests.json";
 
 const insertPost = async () => {

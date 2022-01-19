@@ -5,10 +5,8 @@ const newSignupPayload = async ({ email, password }) => {
     const schema = Joi.object({
       email: Joi.string().email().message("Email seems fishy"),
       password: Joi.string()
-        .pattern(
-          new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#_$%^&*]{3,30}$")
-        )
-        .message("Password is too easy"),
+        .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+        .message("Password validation failed"),
     });
 
     try {

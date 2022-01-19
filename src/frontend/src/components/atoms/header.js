@@ -59,20 +59,29 @@ const UserProfileInNavigation = ({ location }) => {
           <Box pad="small" gap={"small"}>
             <Button
               focusIndicator={false}
-              onClick={() => navigate("/app/datasource")}
+              onClick={() => {
+                toggleMenu();
+                navigate("/app/datasource");
+              }}
             >
               Datasets
             </Button>
             <Button
               focusIndicator={false}
-              onClick={() => navigate("/app/search")}
+              onClick={() => {
+                toggleMenu();
+                navigate("/app/search");
+              }}
             >
               Search
             </Button>
             <Admin>
               <Button
                 focusIndicator={false}
-                onClick={() => navigate("/app/index")}
+                onClick={() => {
+                  toggleMenu();
+                  navigate("/app/index");
+                }}
               >
                 Index
               </Button>
@@ -80,7 +89,10 @@ const UserProfileInNavigation = ({ location }) => {
             <AdminOrAuthor>
               <Button
                 focusIndicator={false}
-                onClick={() => navigate("/app/tokens")}
+                onClick={() => {
+                  toggleMenu();
+                  navigate("/app/tokens");
+                }}
               >
                 Tokens
               </Button>

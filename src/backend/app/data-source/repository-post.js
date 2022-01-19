@@ -17,17 +17,12 @@ const getPostById = async (datasourceId, postId) => {
       },
     });
 
-    const metadata = await getOne(
-      "kosh_metadata",
-      "kosh_metadata",
-      datasourceId,
-      {
-        e_kosh_id: postId,
-      }
-    );
+    const metadata = await getOne("kosh_metadata", "kosh_metadata", {
+      e_kosh_id: postId,
+    });
 
-    console.log({ postId, dID: datasourceId });
-    console.log({ METADATA: metadata });
+    // console.log({ postId, dID: datasourceId });
+    // console.log({ METADATA: metadata });
 
     return {
       post: posts[0],

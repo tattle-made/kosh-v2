@@ -37,6 +37,7 @@ async function readLines(basePath) {
       path.join(basePath, imageFileName)
     );
     await uploadData(imageFileStream, fileId);
+    console.log(`uploading ${imageFileName} to ${fileId}`);
     const s3URL = "https://fs.tattle.co.in/service/kosh/file/" + fileId;
     posts.push({
       id: uuid(),
@@ -112,6 +113,9 @@ const insertPost = async () => {
         { encoding: "utf-8" }
       );
       if (!posts.length) continue;
+      console.log(
+        `${reisDatasetFolder} : ${country} : ${type} : ${posts.length}`
+      );
       const response = await sendRequests(posts);
       console.log(`${reisDatasetFolder}/${country}/${type} ---` + response);
       result.totalPosts += response.totalPosts;
