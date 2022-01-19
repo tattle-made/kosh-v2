@@ -80,17 +80,16 @@ jobs:
           aws-region: ap-south-1
       - name: Install Packages
         run: |
-          pwd
           cd src/frontend 
           npm install --legacy-peer-deps
 
       - name: Build Site
         run: |
-          pwd
+          cd src/frontend 
           npm run build
       - name: Deploy Site
         run: |
-          pwd
+          cd src/frontend 
           npm run deploy
 
       - name: Notify on Slack
