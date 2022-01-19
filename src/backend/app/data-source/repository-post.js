@@ -180,7 +180,7 @@ const indexPosts = async (accessToken, query) => {
   }
   try {
     for (const post of Object.values(postsToIndex)) {
-      await axios.post(process.env.INDEX_API_URL + "/index", post, {
+      await axios.post(process.env.FELUDA_API_URL + "/index", post, {
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-type": "application/json",
