@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: master
+          ref: main
       - uses: dorny/paths-filter@v2.2.0
         id: filter
         with:
