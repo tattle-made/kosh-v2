@@ -1,4 +1,5 @@
 const { expressApp, configure, start } = require("./core/http/index");
+const config = require("config");
 const { configure: configureHealthCheck } = require("./app/health-check/index");
 const {
   configure: configureAuthentication,
@@ -7,7 +8,6 @@ const {
   configureRoutes: configureDataRoutes,
 } = require("./app/data-source/index");
 const { configure: configureUserRoutes } = require("./app/user/index");
-const config = require("config");
 const configureIndexRoutes = require("./app/index-post/routes");
 const { connect: connectToMongo } = require("./core/mongo");
 
