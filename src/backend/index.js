@@ -6,10 +6,10 @@ const {
 const {
   configureRoutes: configureDataRoutes,
 } = require("./app/data-source/index");
-const { configure: configureUserRoutes } = require("./app/user/index")
+const { configure: configureUserRoutes } = require("./app/user/index");
 const config = require("config");
 const { connect: connectToMongo } = require("./core/mongo");
-const configureIndexRoutes = require("./app/index-post/routes")
+const configureIndexRoutes = require("./app/index-post/routes");
 
 const PORT = config.get("express.port");
 
