@@ -82,7 +82,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build Site
-        run: npm run build
+        run: cd src/frontend && npm run build
       - name: Deploy Site
         run: npm run deploy
 
