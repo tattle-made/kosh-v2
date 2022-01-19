@@ -93,7 +93,7 @@ const SearchPost = () => {
         />
       ) : (
         <>
-          <Box pad={"small"} direction="row">
+          <Box pad={"small"} direction="row" width={"large"}>
             <Box justify="center" align="center" width={"xxsmall"}>
               <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => {
@@ -108,7 +108,7 @@ const SearchPost = () => {
             </Box>
             {searchFile ? (
               <Box
-                width={"medium"}
+                width={"large"}
                 pad={"small"}
                 direction="row"
                 justify="between"
