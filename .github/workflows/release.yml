@@ -37,6 +37,8 @@ jobs:
         run: |
           echo "setting variables"
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+          
       - name: Publish to Docker
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
@@ -46,14 +48,18 @@ jobs:
           tags: ${{ steps.vars.outputs.sha_short }}
           workdir: src/backend/
 
-      - name: Deploy to k8s
-        uses: appleboy/ssh-action@master
+      - name: deploy to cluster
+        uses: steebchen/kubectl@v2.0.0
+        with: # defaults to latest kubectl binary version
+          config: ${{ secrets.PROD_KUBE_CONFIG_DATA }}
+          command: set image --record deployment/kosh-server kosh-server=tattletech/kosh-server:${{ steps.vars.outputs.sha_short }}
+      - name: verify deployment
+        uses: steebchen/kubectl@v2.0.0
         with:
-          host: ${{ secrets.K8S_HOST_PROD }}
-          username: ${{ secrets.K8S_USERNAME }}
-          key: ${{ secrets.K8S_KEY }}
-          script: |
-            ./autodeploy_kosh_rest.sh ${{ steps.vars.outputs.sha_short }} >> ~/deploy.log 2>&1
+          config: ${{ secrets.PROD_KUBE_CONFIG_DATA }}
+          version: v1.21.0 # specify kubectl binary version explicitly
+          command: rollout status deployment/kosh-server
+      
 
       - name: Notify on Slack
         uses: rtCamp/action-slack-notify@v2.0.0
