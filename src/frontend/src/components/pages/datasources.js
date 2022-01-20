@@ -50,9 +50,9 @@ const DataSources = ({ location }) => {
       <Box direction={"column"}>
         <Section>
           <ResponsiveGrid>
-            {/* <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
+            <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/d10879a0-83cd-11eb-8eb1-9d22f3b98bd1"}
+                to={"/app/datasource/627b83e2-03b3-449c-a2bf-72d8a664ba93"}
               >
                 <Box
                   width={"100%"}
@@ -80,10 +80,10 @@ const DataSources = ({ location }) => {
                   </Paragraph>
                 </Box>
               </PlainLink>
-            </Box> */}
+            </Box>
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/883176d5-77c5-11ec-957f-0242ac160005"}
+                to={"/app/datasource/47f0b9c4-2620-4703-8840-ca4ead210f54"}
               >
                 <Box
                   width={"100%"}
@@ -120,7 +120,7 @@ const DataSources = ({ location }) => {
             </Box>
             <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
               <PlainLink
-                to={"/app/datasource/8a46cda5-717a-47d7-bbc2-1e239e89cef8"}
+                to={"/app/datasource/38db9b46-ad43-4370-a1ba-05a25f4756f2"}
               >
                 <Box
                   width={"100%"}

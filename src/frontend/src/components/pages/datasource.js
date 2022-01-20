@@ -4,9 +4,9 @@ import { BlockSection, ContentSection, Section } from "../atoms/section";
 import DataFeed from "../atoms/datafeed";
 
 const datasourceToCollectionMap = {
-  "7c62d659-8294-11eb-bd02-0242ac120004": "Fact Check Article Media Items",
-  "bc55e2a0-8228-11eb-9e87-719e13e27321": "Checkmate dataset",
-  "bc58a1c0-8228-11eb-9e87-719e13e27321": "The Fearspeech Dataset",
+  "627b83e2-03b3-449c-a2bf-72d8a664ba93": "Fact Check Article Media Items",
+  "47f0b9c4-2620-4703-8840-ca4ead210f54": "Election Memes from Whatsapp",
+  "38db9b46-ad43-4370-a1ba-05a25f4756f2": "The Fearspeech Dataset",
 };
 
 const Datasource = ({ datasourceId }) => {
