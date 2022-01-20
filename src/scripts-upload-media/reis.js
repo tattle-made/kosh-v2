@@ -3,16 +3,15 @@ const path = require("path");
 const fs = require("fs");
 const readline = require("readline");
 const { v4: uuid } = require("uuid");
-require("dotenv").config({
-  path: path.join(__dirname, "development.env"),
-});
 const { uploadData } = require("./s3");
 const { connect, bulkWrite } = require("../backend/core/mongo/index");
+const { initialize } = require("./environment");
+initialize(process.argv[0]);
 
 const FACTCHECK_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
 const accessToken = process.env.ACCESS_TOKEN;
-const datasource = "883176d5-77c5-11ec-957f-0242ac160005";
+const datasource = "fe4d18ed-0c9b-4f02-b431-6a00625bacf4";
 const failedRequestsFile = "reis-failed-requests.json";
 const reisDatasetFolder = "./reis-data";
 const delimiter = "	";
