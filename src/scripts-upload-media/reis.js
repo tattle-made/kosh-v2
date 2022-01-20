@@ -1,3 +1,5 @@
+const { initialize } = require("./environment");
+initialize(process.argv[0]);
 const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
@@ -5,8 +7,9 @@ const readline = require("readline");
 const { v4: uuid } = require("uuid");
 const { uploadData } = require("./s3");
 const { connect, bulkWrite } = require("../backend/core/mongo/index");
-const { initialize } = require("./environment");
-initialize(process.argv[0]);
+console.log(
+  `Uploading to ${process.env.API_URL} and ${process.env.MONGO_DB_URL}`
+);
 
 const FACTCHECK_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
