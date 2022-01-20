@@ -45,4 +45,4 @@ Join our [slack channel](https://join.slack.com/t/tattle-workspace/shared_invite
 
 contact us at admin@tattle.co.in
 
-v 0.0.1
+v 0.0.2
