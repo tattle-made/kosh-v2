@@ -1,5 +1,4 @@
-import { post } from "./backend";
-import axios from "axios";
+import { post, get } from "./backend";
 
 export const signUp = async (email, password) => {
   try {

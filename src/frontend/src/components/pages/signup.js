@@ -52,10 +52,10 @@ const SignUp = () => {
                 type={"password"}
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <Text size={"xsmall"}>
+              {/* <Text size={"xsmall"}>
                 Include uppercase and lower case letter, number and a special
                 character
-              </Text>
+              </Text> */}
             </Box>
           </Box>
           <Box height={"1.2em"}></Box>
