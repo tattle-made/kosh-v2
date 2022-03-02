@@ -4,7 +4,7 @@ const newSignupPayload = async ({ email, password }) => {
   try {
     const schema = Joi.object({
       email: Joi.string().email().message("Email seems fishy"),
-      password: Joi.string().length(5).message("Password too short"),
+      password: Joi.string().min(5).required().message("Password too short"),
     });
 
     try {
