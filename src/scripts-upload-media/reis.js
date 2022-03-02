@@ -11,10 +11,10 @@ console.log(
   `Uploading to ${process.env.API_URL} and ${process.env.MONGO_DB_URL}`
 );
 
-const FACTCHECK_DB = "kosh_metadata";
+const METADATA_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
 const accessToken = process.env.ACCESS_TOKEN;
-const datasource = "fe4d18ed-0c9b-4f02-b431-6a00625bacf4";
+const datasource = "47f0b9c4-2620-4703-8840-ca4ead210f54";
 const failedRequestsFile = "reis-failed-requests.json";
 const reisDatasetFolder = "./reis-data";
 const delimiter = "	";
@@ -96,7 +96,7 @@ async function insertMetadata(batch) {
       },
     };
   });
-  await bulkWrite(FACTCHECK_DB, METADATA_COLLECTION, insertPostMetadata);
+  await bulkWrite(METADATA_DB, METADATA_COLLECTION, insertPostMetadata);
 }
 
 const insertPost = async () => {

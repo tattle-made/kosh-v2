@@ -1,18 +1,21 @@
+const { initialize } = require("./environment");
+initialize(process.argv[0]);
 const axios = require("axios");
 const path = require("path");
 const { v4: uuid } = require("uuid");
-require("dotenv").config({
-  path: path.join(__dirname, "development.env"),
-});
 const fs = require("fs");
 const { connect, get, bulkWrite } = require("../backend/core/mongo/index");
+
+console.log(
+  `Uploading to ${process.env.API_URL} and ${process.env.MONGO_DB_URL}`
+);
 
 const FACTCHECK_DB = "factcheck_sites";
 const FACTCHECK_COLLECTION = "stories";
 const METADATA_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
 const accessToken = process.env.ACCESS_TOKEN;
-const datasource = "c3d630b0-a3fd-4140-97a1-f4a824c5e242";
+const datasource = "627b83e2-03b3-449c-a2bf-72d8a664ba93";
 const knownMediaTypes = ["text", "image"];
 const ignoreMediaTypes = ["tweet", "facebook", "instagram", "video"];
 const failedRequestsFile = "factcheck-failed-requests.json";

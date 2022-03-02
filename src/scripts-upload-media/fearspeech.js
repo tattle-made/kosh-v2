@@ -1,18 +1,21 @@
+const { initialize } = require("./environment");
+initialize(process.argv[0]);
 const axios = require("axios");
 const path = require("path");
 const { v4: uuid } = require("uuid");
 const fs = require("fs");
-require("dotenv").config({
-  path: path.join(__dirname, "development.env"),
-});
 const stories = require("./fear_speech_data.json");
 const { bulkWrite, connect } = require("../backend/core/mongo");
 
 const FACTCHECK_DB = "kosh_metadata";
 const METADATA_COLLECTION = "kosh_metadata";
 const accessToken = process.env.ACCESS_TOKEN;
-const datasource = "883176d5-77c5-11ec-957f-0242ac160005";
+const datasource = "38db9b46-ad43-4370-a1ba-05a25f4756f2";
 const failedRequestsFile = "fear-speech-failed-requests.json";
+
+console.log(
+  `Uploading to ${process.env.API_URL} and ${process.env.MONGO_DB_URL}`
+);
 
 const insertPost = async () => {
   const posts = [];

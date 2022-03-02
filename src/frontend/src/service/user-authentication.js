@@ -12,7 +12,7 @@ export const signUp = async (email, password) => {
 };
 export const emailVerification = async (token) => {
   try {
-    const response = await axios.get(`/auth/email-verification?token=${token}`);
+    const response = await get(`/auth/email-verification?token=${token}`);
     return response.data;
   } catch (err) {
     console.log("Error Verifying Token", err);
