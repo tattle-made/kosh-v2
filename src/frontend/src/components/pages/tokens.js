@@ -75,7 +75,7 @@ const Tokens = () => {
             size="medium"
             icon={<Copy color={"#514E80AA"} size={22} />}
             style={{ border: "1px solid grey", borderRadius: 4, padding: 4 }}
-            onClick={() => navigator.clipboard.writeText(item.token)}
+            onClick={() => window.customClipBoard.writeText(item.token)}
           />
           <Button
             alignSelf="start"
