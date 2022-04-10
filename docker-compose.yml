@@ -43,7 +43,7 @@ services:
       target: debug
     container_name: kosh_api
     restart: always
-    command: tail -f /dev/null
+    command: nodemon index.js
     ports:
       - 10001:8000
       - 9229:9229

@@ -3,7 +3,7 @@ module.exports = {
     username: "user_name",
     password: "user_pw",
     database: "kosh",
-    host: "localhost",
+    host: process.env.SQL_DB_HOST || "localhost",
     dialect: "mysql",
   },
   staging: {

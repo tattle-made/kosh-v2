@@ -10,11 +10,15 @@ module.exports = {
     const password_admin = generatePassword();
     const password_author = generatePassword();
     const password_reader = generatePassword();
-    console.log({ password_admin, password_author, password_reader });
     const hashedPasswordAdmin = await bcrypt.hash(password_admin, 10);
     const hashedPasswordAuthor = await bcrypt.hash(password_author, 10);
     const hashedPasswordReader = await bcrypt.hash(password_reader, 10);
     // console.log(hashedPassword);
+    console.log({
+      "admin@tattle.co.in": password_admin,
+      "author@tattle.co.in": password_author,
+      "reader@tattle.co.in": password_reader,
+    });
     const users = await queryInterface.bulkInsert("users", [
       {
         id: uuidv4(),
