@@ -40,7 +40,7 @@ jobs:
 
           
       - name: Publish to Docker
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           username: tattletech
           password: ${{ secrets.DOCKER_PASSWORD }}
