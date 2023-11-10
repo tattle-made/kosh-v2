@@ -14,37 +14,34 @@ import { graphql } from "gatsby";
  **/
 
 const DataSources = ({ location }) => {
-  const {
-    cover_factcheck_articles,
-    cover_fear_speech,
-    cover_checkmate,
-  } = useStaticQuery(graphql`
-    query {
-      cover_factcheck_articles: file(
-        relativePath: { eq: "fact_check_cover.png" }
-      ) {
-        childImageSharp {
-          fluid {
-            src
+  const { cover_factcheck_articles, cover_fear_speech, cover_checkmate } =
+    useStaticQuery(graphql`
+      query {
+        cover_factcheck_articles: file(
+          relativePath: { eq: "fact_check_cover.png" }
+        ) {
+          childImageSharp {
+            fluid {
+              src
+            }
+          }
+        }
+        cover_fear_speech: file(relativePath: { eq: "fear_speech_cover.png" }) {
+          childImageSharp {
+            fluid {
+              src
+            }
+          }
+        }
+        cover_checkmate: file(relativePath: { eq: "checkmate_cover.png" }) {
+          childImageSharp {
+            fluid {
+              src
+            }
           }
         }
       }
-      cover_fear_speech: file(relativePath: { eq: "fear_speech_cover.png" }) {
-        childImageSharp {
-          fluid {
-            src
-          }
-        }
-      }
-      cover_checkmate: file(relativePath: { eq: "checkmate_cover.png" }) {
-        childImageSharp {
-          fluid {
-            src
-          }
-        }
-      }
-    }
-  `);
+    `);
   return (
     <ContentSection>
       <Box direction={"column"}>
@@ -150,6 +147,36 @@ const DataSources = ({ location }) => {
                   <a href="https://arxiv.org/abs/2102.03870" target="_blank">
                     Arxiv Link
                   </a>
+                </Box>
+              </PlainLink>
+            </Box>
+            <Box direction="column" gap={"xsmall"} margin={{ top: "medium" }}>
+              <PlainLink
+                to={"/app/datasource/f5bf1f88-cffe-47e1-9383-ad17780e8886"}
+              >
+                <Box
+                  width={"100%"}
+                  height={"small"}
+                  round={"xxsmall"}
+                  overflow={"hidden"}
+                  background={`visuals-2`}
+                  pad={"large"}
+                >
+                  <Image
+                    src={cover_fear_speech.childImageSharp.fluid.src}
+                    fit="contain"
+                  />
+                </Box>
+                <Box>
+                  <Heading
+                    level={4}
+                    margin={{ bottom: "4.578px", top: "7.324px" }}
+                  >
+                    Manipur Crisis
+                  </Heading>
+                  <Paragraph size={"small"} margin={{ top: "none" }}>
+                    Content collected from social media and news website
+                  </Paragraph>
                 </Box>
               </PlainLink>
             </Box>
